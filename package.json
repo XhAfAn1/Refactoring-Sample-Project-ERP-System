@@ -1,0 +1,11 @@
+{
+  "name": "erp-system",
+  "private": true,
+  "scripts": {
+    "compile": "javac -d bin src/com/erp/*.java",
+    "run": "java -cp bin com.erp.ERPSystem",
+    "build": "npm run compile",
+    "start": "npm run compile && npm run run",
+    "clean": "rm -rf bin && mkdir bin"
+  }
+}
