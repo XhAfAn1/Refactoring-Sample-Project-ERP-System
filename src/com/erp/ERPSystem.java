@@ -4,7 +4,7 @@ import java.util.*;
 import java.io.*;
 
 public class ERPSystem {
-    public static String companyName = "Global Corp";
+    public static String companyName = "Nebuchadnezzar";
     public static double totalRevenue = 0;
     public static double totalExpenses = 0;
     public static ArrayList allEmployees = new ArrayList();
