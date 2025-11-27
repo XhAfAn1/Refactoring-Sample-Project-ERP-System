@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Refactored Codes/Refactored Codes.iml" filepath="$PROJECT_DIR$/Refactored Codes/Refactored Codes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Refactoring-Sample-Project-ERP-System.iml" filepath="$PROJECT_DIR$/Refactoring-Sample-Project-ERP-System.iml" />
+    </modules>
+  </component>
+</project>
