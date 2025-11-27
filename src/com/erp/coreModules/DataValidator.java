@@ -1,4 +1,4 @@
-package com.erp;
+package com.erp.coreModules;
 
 public class DataValidator {
     public static boolean flag = true;

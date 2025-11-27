@@ -1,4 +1,4 @@
-package com.erp;
+package com.erp.salesModules;
 
 public class OrderItem {
     public int productId;

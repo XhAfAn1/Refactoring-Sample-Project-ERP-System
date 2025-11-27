@@ -1,4 +1,4 @@
-package com.erp;
+package com.erp.productModules;
 
 public class Product {
     public int id;

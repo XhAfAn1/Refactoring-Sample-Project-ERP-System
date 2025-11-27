@@ -1,6 +1,9 @@
-package com.erp;
+package com.erp.supplierModules;
 
 import java.util.*;
+
+import com.erp.coreModules.ERPSystem;
+import com.erp.productModules.Product;
 
 public class SupplierManager {
     public ArrayList purchaseOrders = new ArrayList();

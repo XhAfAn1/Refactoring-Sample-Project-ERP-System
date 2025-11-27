@@ -1,6 +1,12 @@
-package com.erp;
+package com.erp.financeModules;
 
 import java.util.*;
+
+import com.erp.coreModules.ERPSystem;
+import com.erp.customerModules.Customer;
+import com.erp.employeeModules.Employee;
+import com.erp.supplierModules.PurchaseOrder;
+import com.erp.supplierModules.SupplierManager;
 
 public class FinanceManager {
     public ArrayList transactions = new ArrayList();

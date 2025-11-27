@@ -1,6 +1,13 @@
-package com.erp;
+package com.erp.reportModules;
 
 import java.util.*;
+
+import com.erp.coreModules.ERPSystem;
+import com.erp.customerModules.Customer;
+import com.erp.employeeModules.Employee;
+import com.erp.productModules.Product;
+import com.erp.salesModules.Order;
+import com.erp.salesModules.OrderItem;
 
 public class ReportManager {
     public void showMenu() {

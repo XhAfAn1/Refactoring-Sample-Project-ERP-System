@@ -1,4 +1,4 @@
-package com.erp;
+package com.erp.supplierModules;
 
 public class PurchaseOrderItem {
     public int productId;

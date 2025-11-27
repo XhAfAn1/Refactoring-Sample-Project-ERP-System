@@ -1,6 +1,7 @@
-package com.erp;
+package com.erp.customerModules;
 
-import java.util.*;
+import com.erp.coreModules.ERPSystem;
+import com.erp.salesModules.Order;
 
 public class CustomerManager {
     public void showMenu() {

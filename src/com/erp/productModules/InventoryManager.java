@@ -1,6 +1,8 @@
-package com.erp;
+package com.erp.productModules;
 
 import java.util.*;
+
+import com.erp.coreModules.ERPSystem;
 
 public class InventoryManager {
     public void showMenu() {

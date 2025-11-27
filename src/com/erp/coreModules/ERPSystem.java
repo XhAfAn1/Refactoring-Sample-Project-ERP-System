@@ -1,7 +1,17 @@
-package com.erp;
+package com.erp.coreModules;
 
+import com.erp.customerModules.Customer;
+import com.erp.customerModules.CustomerManager;
+import com.erp.employeeModules.Employee;
+import com.erp.employeeModules.EmployeeManager;
+import com.erp.financeModules.FinanceManager;
+import com.erp.productModules.InventoryManager;
+import com.erp.productModules.Product;
+import com.erp.reportModules.ReportManager;
+import com.erp.salesModules.SalesManager;
+import com.erp.supplierModules.Supplier;
+import com.erp.supplierModules.SupplierManager;
 import java.util.*;
-import java.io.*;
 
 public class ERPSystem {
     public static String companyName = "Nebuchadnezzar";

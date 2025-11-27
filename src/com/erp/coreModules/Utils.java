@@ -1,4 +1,4 @@
-package com.erp;
+package com.erp.coreModules;
 
 import java.util.*;
 import java.text.*;

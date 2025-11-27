@@ -1,6 +1,10 @@
-package com.erp;
+package com.erp.employeeModules;
 
 import java.util.*;
+
+import com.erp.coreModules.ERPSystem;
+
+
 
 public class EmployeeManager {
     public void showMenu() {
