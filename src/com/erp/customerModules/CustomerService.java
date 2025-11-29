@@ -1,8 +1,8 @@
-import com.erp.Customer;
-import CustomerRepository;
+package com.erp.customerModules;
+
 import java.util.List;
 
-public class CustomerService {
+public class CustomerService{
     private final CustomerRepository repo;
 
     public CustomerService(CustomerRepository repo) {
@@ -42,5 +42,9 @@ public class CustomerService {
             total += c.currentBalance;
         }
         return total;
+    }
+
+    boolean deleteCustomer(int id) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

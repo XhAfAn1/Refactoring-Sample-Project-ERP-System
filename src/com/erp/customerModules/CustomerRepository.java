@@ -1,5 +1,7 @@
-import com.erp.Customer;
+package com.erp.customerModules;
+
 import java.util.*;
+
 
 public class CustomerRepository {
     private final List<Customer> customers = new ArrayList<>();

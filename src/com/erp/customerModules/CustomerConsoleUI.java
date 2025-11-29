@@ -1,11 +1,11 @@
-package com.erp.ui;
+package com.erp.customerModules;
 
-import com.erp.Order;
-import com.erp.service.CustomerService;
-import com.erp.service.OrderService;
+import com.erp.salesModules.Order;
 import java.util.Scanner;
 
+
 public class CustomerConsoleUI {
+
     private final CustomerService customerService;
     private final OrderService orderService;
     private final Scanner scanner;
@@ -39,7 +39,7 @@ public class CustomerConsoleUI {
                 case 3 -> searchCustomerUI();
                 case 4 -> updateCustomerUI();
                 case 5 -> deleteCustomerUI();
-                case 6 -> customerOrdersUI(); 
+                case 6 -> customerOrdersUI();
                 case 7 -> updateCreditLimitUI();
                 case 8 -> balanceReportUI();
                 case 9 -> { return; }
@@ -48,38 +48,34 @@ public class CustomerConsoleUI {
         }
     }
 
-    private void customerOrdersUI() {
-        System.out.print("Enter Customer ID: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-
-        var orders = orderService.getOrdersForCustomer(id);
-        if (orders.isEmpty()) {
-            System.out.println("No orders found for this customer!");
-        } else {
-            System.out.println("\n=== CUSTOMER ORDERS ===");
-            for (Order o : orders) {
-                o.print();
-                System.out.println("---");
-            }
-        }
-    }
-
     private void addCustomerUI() {
         Customer c = new Customer();
+
         System.out.print("Enter ID: ");
         c.id = scanner.nextInt();
         scanner.nextLine();
+
         System.out.print("Enter Name: ");
         c.name = scanner.nextLine();
-        // ... other inputs
-        service.addCustomer(c);
+
+        System.out.print("Enter Email: ");
+        c.email = scanner.nextLine();
+
+        System.out.print("Enter Phone: ");
+        c.phone = scanner.nextLine();
+
+        System.out.print("Enter Credit Limit: ");
+        c.creditLimit = scanner.nextDouble();
+        scanner.nextLine();
+
+        customerService.addCustomer(c);
         System.out.println("Customer added successfully!");
     }
 
     private void viewAllUI() {
-        for (Customer c : service.getAllCustomers()) {
+        for (Customer c : customerService.getAllCustomers()) {
             c.print();
+            System.out.println("----");
         }
     }
 
@@ -87,7 +83,8 @@ public class CustomerConsoleUI {
         System.out.print("Enter Customer ID: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-        Customer c = service.findCustomer(id);
+
+        Customer c = customerService.findCustomer(id);
         if (c != null) c.print();
         else System.out.println("Customer not found!");
     }
@@ -96,11 +93,19 @@ public class CustomerConsoleUI {
         System.out.print("Enter Customer ID: ");
         int id = scanner.nextInt();
         scanner.nextLine();
+
+        Customer c = customerService.findCustomer(id);
+        if (c == null) {
+            System.out.println("Customer not found!");
+            return;
+        }
+
         System.out.print("Enter new Email: ");
-        String email = scanner.nextLine();
+        c.email = scanner.nextLine();
+
         System.out.print("Enter new Phone: ");
-        String phone = scanner.nextLine();
-        service.updateCustomerContact(id, email, phone);
+        c.phone = scanner.nextLine();
+
         System.out.println("Updated successfully!");
     }
 
@@ -108,23 +113,44 @@ public class CustomerConsoleUI {
         System.out.print("Enter Customer ID: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-        Customer c = service.findCustomer(id);
-        if (c != null) {
-            service.getAllCustomers().remove(c);
+
+        if (customerService.deleteCustomer(id))
             System.out.println("Deleted successfully!");
-        } else System.out.println("Customer not found!");
+        else
+            System.out.println("Customer not found!");
+    }
+
+    private void customerOrdersUI() {
+        System.out.print("Enter Customer ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        var orders = orderService.getOrdersForCustomer(id);
+
+        if (orders.isEmpty()) {
+            System.out.println("No orders found!");
+            return;
+        }
+
+        for (Order o : orders) {
+            o.print();
+            System.out.println("----");
+        }
     }
 
     private void updateCreditLimitUI() {
         System.out.print("Enter Customer ID: ");
         int id = scanner.nextInt();
+
         System.out.print("Enter new limit: ");
         double limit = scanner.nextDouble();
-        service.updateCreditLimit(id, limit);
+
+        customerService.updateCreditLimit(id, limit);
+        System.out.println("Credit limit updated!");
     }
 
     private void balanceReportUI() {
-        double total = service.calculateTotalOutstanding();
+        double total = customerService.calculateTotalOutstanding();
         System.out.println("Total Outstanding Balance: $" + total);
     }
 }

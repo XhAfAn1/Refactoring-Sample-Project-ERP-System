@@ -1,8 +1,8 @@
-package com.erp.service;
+package com.erp.customerModules;
 
-import com.erp.Order;
-import com.erp.repository.OrderRepository;
 import java.util.List;
+
+import com.erp.salesModules.Order;
 
 public class OrderService {
     private final OrderRepository repo;

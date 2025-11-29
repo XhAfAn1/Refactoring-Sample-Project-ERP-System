@@ -1,7 +1,11 @@
 package com.erp.coreModules;
 
 import com.erp.customerModules.Customer;
-import com.erp.customerModules.CustomerManager;
+import com.erp.customerModules.CustomerConsoleUI;
+import com.erp.customerModules.CustomerRepository;
+import com.erp.customerModules.CustomerService;
+import com.erp.customerModules.OrderRepository;
+import com.erp.customerModules.OrderService;
 import com.erp.employeeModules.Employee;
 import com.erp.employeeModules.EmployeeManager;
 import com.erp.financeModules.FinanceManager;
@@ -14,6 +18,7 @@ import com.erp.supplierModules.SupplierManager;
 import java.util.*;
 
 public class ERPSystem {
+
     public static String companyName = "Nebuchadnezzar";
     public static double totalRevenue = 0;
     public static double totalExpenses = 0;
@@ -25,6 +30,19 @@ public class ERPSystem {
     public static HashMap inventory = new HashMap();
     public static Scanner scanner = new Scanner(System.in);
 
+    static CustomerRepository customerRepo = new CustomerRepository();
+
+    public static OrderService getOrderService() {
+        return orderService;
+    }
+    public static void setOrderService(OrderService orderService) {
+        ERPSystem.orderService = orderService;
+    }
+    static OrderRepository orderRepo = new OrderRepository();
+    static CustomerService customerService = new CustomerService(customerRepo);
+    static OrderService orderService = new OrderService(orderRepo);
+
+
     public static void main(String[] args) {
         System.out.println("========================================");
         System.out.println("Welcome to " + companyName + " ERP System");
@@ -32,7 +50,7 @@ public class ERPSystem {
 
         initializeData();
 
-        while(true) {
+        while (true) {
             System.out.println("\n=== MAIN MENU ===");
             System.out.println("1. Employee Management");
             System.out.println("2. Inventory Management");
@@ -48,31 +66,31 @@ public class ERPSystem {
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            if(choice == 1) {
+            if (choice == 1) {
                 EmployeeManager em = new EmployeeManager();
                 em.showMenu();
-            } else if(choice == 2) {
+            } else if (choice == 2) {
                 InventoryManager im = new InventoryManager();
                 im.showMenu();
-            } else if(choice == 3) {
+            } else if (choice == 3) {
                 SalesManager sm = new SalesManager();
                 sm.showMenu();
-            } else if(choice == 4) {
-                CustomerManager cm = new CustomerManager();
+            } else if (choice == 4) {
+                CustomerConsoleUI cm = new CustomerConsoleUI(customerService, orderService, scanner);
                 cm.showMenu();
-            } else if(choice == 5) {
+            } else if (choice == 5) {
                 SupplierManager supm = new SupplierManager();
                 supm.showMenu();
-            } else if(choice == 6) {
+            } else if (choice == 6) {
                 FinanceManager fm = new FinanceManager();
                 fm.showMenu();
-            } else if(choice == 7) {
+            } else if (choice == 7) {
                 ReportManager rm = new ReportManager();
                 rm.showMenu();
-            } else if(choice == 8) {
+            } else if (choice == 8) {
                 SystemSettings ss = new SystemSettings();
                 ss.showMenu();
-            } else if(choice == 9) {
+            } else if (choice == 9) {
                 System.out.println("Exiting system...");
                 break;
             } else {

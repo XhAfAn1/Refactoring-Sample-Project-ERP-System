@@ -1,7 +1,8 @@
-package com.erp.repository;
+package com.erp.customerModules;
 
-import com.erp.Order;
 import java.util.*;
+
+import com.erp.salesModules.Order;
 
 public class OrderRepository {
     private final List<Order> orders = new ArrayList<>();
