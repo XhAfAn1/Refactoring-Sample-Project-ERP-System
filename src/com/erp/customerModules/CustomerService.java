@@ -2,10 +2,13 @@ package com.erp.customerModules;
 
 import java.util.List;
 
-public class CustomerService{
-    private final CustomerRepository repo;
+// THE HIGH-LEVEL MODULE (Depends on Abstraction)
+public class CustomerService {
+    // CHANGE 1: Use the Interface here
+    private final ICustomerRepository repo; 
 
-    public CustomerService(CustomerRepository repo) {
+    // CHANGE 2: Accept the Interface in constructor
+    public CustomerService(ICustomerRepository repo) {
         this.repo = repo;
     }
 
@@ -44,7 +47,12 @@ public class CustomerService{
         return total;
     }
 
-    boolean deleteCustomer(int id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean deleteCustomer(int id) {
+        Customer c = repo.findById(id);
+        if (c != null) {
+            repo.remove(c);
+            return true;
+        }
+        return false;
     }
 }
