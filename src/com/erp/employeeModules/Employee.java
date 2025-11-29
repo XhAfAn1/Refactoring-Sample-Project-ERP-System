@@ -2,34 +2,30 @@ package com.erp.employeeModules;
 
 import java.util.*;
 
-public class Employee {
+public abstract class Employee {
+    // Common fields for ALL employees
     public int id;
     public String name;
     public String department;
-    public double salary;
     public String email;
     public String phone;
     public Date hireDate;
     public String address;
     public int age;
     public String position;
-    public double bonus;
-    public int vacationDays;
     public boolean isActive;
     public String manager;
 
     public Employee() {
         hireDate = new Date();
         isActive = true;
-        vacationDays = 15;
-        bonus = 0;
     }
 
+    // Common methods with implementation
     public void print() {
         System.out.println("ID: " + id);
         System.out.println("Name: " + name);
         System.out.println("Department: " + department);
-        System.out.println("Salary: $" + salary);
         System.out.println("Email: " + email);
         System.out.println("Phone: " + phone);
         System.out.println("Position: " + position);
@@ -37,17 +33,18 @@ public class Employee {
         System.out.println("Active: " + isActive);
     }
 
-    public double calculateAnnualSalary() {
-        return salary * 12 + bonus;
-    }
+    // Abstract methods - subclasses MUST implement
+    public abstract double calculateSalary();
+    public abstract double calculateAnnualSalary();
+    public abstract int getVacationDays();
+    public abstract void giveRaise(double percentage);
 
-    public void giveRaise(double percentage) {
-        salary = salary + (salary * percentage / 100);
-        System.out.println("New salary: $" + salary);
-    }
+    // Common getters/setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    
 
-    public void addBonus(double amount) {
-        bonus += amount;
-        System.out.println("Bonus added: $" + amount);
-    }
 }

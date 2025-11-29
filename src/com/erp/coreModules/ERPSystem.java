@@ -6,8 +6,8 @@ import com.erp.customerModules.CustomerRepository;
 import com.erp.customerModules.CustomerService;
 import com.erp.customerModules.OrderRepository;
 import com.erp.customerModules.OrderService;
-import com.erp.employeeModules.Employee;
 import com.erp.employeeModules.EmployeeManager;
+import com.erp.employeeModules.FullTimeEmployee;
 import com.erp.financeModules.FinanceManager;
 import com.erp.productModules.InventoryManager;
 import com.erp.productModules.Product;
@@ -100,19 +100,19 @@ public class ERPSystem {
     }
 
     public static void initializeData() {
-        Employee e1 = new Employee();
+        FullTimeEmployee e1 = new FullTimeEmployee();
         e1.id = 1;
         e1.name = "John Doe";
         e1.department = "IT";
-        e1.salary = 50000;
+        e1.monthlySalary = 50000;
         e1.email = "john@company.com";
         allEmployees.add(e1);
 
-        Employee e2 = new Employee();
+        FullTimeEmployee e2 = new FullTimeEmployee();
         e2.id = 2;
         e2.name = "Jane Smith";
         e2.department = "HR";
-        e2.salary = 45000;
+        e2.monthlySalary = 45000;
         e2.email = "jane@company.com";
         allEmployees.add(e2);
 

@@ -1,13 +1,12 @@
 package com.erp.reportModules;
 
-import java.util.*;
-
 import com.erp.coreModules.ERPSystem;
 import com.erp.customerModules.Customer;
-import com.erp.employeeModules.Employee;
+import com.erp.employeeModules.FullTimeEmployee;
 import com.erp.productModules.Product;
 import com.erp.salesModules.Order;
 import com.erp.salesModules.OrderItem;
+import java.util.*;
 
 public class ReportManager {
     public void showMenu() {
@@ -133,8 +132,8 @@ public class ReportManager {
         HashMap deptCount = new HashMap();
 
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
-            Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            totalSalary += e.salary;
+            FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
+            totalSalary += e.monthlySalary;
 
             if(deptCount.containsKey(e.department)) {
                 int count = (Integer)deptCount.get(e.department);
@@ -254,8 +253,8 @@ public class ReportManager {
 
         double salaryExpense = 0;
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
-            Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            salaryExpense += e.salary * 12;
+            FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
+            salaryExpense += e.monthlySalary * 12;
         }
         System.out.println("Annual Salary Cost: $" + salaryExpense);
 
@@ -309,8 +308,8 @@ public class ReportManager {
         System.out.println("Total Employees: " + ERPSystem.allEmployees.size());
         double totalSalary = 0;
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
-            Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            totalSalary += e.salary;
+            FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
+            totalSalary += e.monthlySalary;
         }
         System.out.println("Monthly Payroll: $" + totalSalary);
 
@@ -337,8 +336,8 @@ public class ReportManager {
             System.out.println("\nExporting employees to employees.txt...");
             System.out.println("ID,Name,Department,Salary,Email");
             for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
-                Employee e = (Employee)ERPSystem.allEmployees.get(i);
-                System.out.println(e.id + "," + e.name + "," + e.department + "," + e.salary + "," + e.email);
+                FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
+                System.out.println(e.id + "," + e.name + "," + e.department + "," + e.monthlySalary + "," + e.email);
             }
         } else if(choice == 2) {
             System.out.println("\nExporting products to products.txt...");

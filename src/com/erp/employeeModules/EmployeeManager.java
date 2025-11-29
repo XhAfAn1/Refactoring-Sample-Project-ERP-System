@@ -1,8 +1,7 @@
 package com.erp.employeeModules;
 
-import java.util.*;
-
 import com.erp.coreModules.ERPSystem;
+import java.util.*;
 
 
 
@@ -47,7 +46,7 @@ public class EmployeeManager {
     }
 
     public void addEmployee() {
-        Employee e = new Employee();
+        FullTimeEmployee e = new FullTimeEmployee();
         System.out.print("Enter ID: ");
         e.id = ERPSystem.scanner.nextInt();
         ERPSystem.scanner.nextLine();
@@ -56,7 +55,7 @@ public class EmployeeManager {
         System.out.print("Enter Department: ");
         e.department = ERPSystem.scanner.nextLine();
         System.out.print("Enter Salary: ");
-        e.salary = ERPSystem.scanner.nextDouble();
+        e.monthlySalary = ERPSystem.scanner.nextDouble();
         ERPSystem.scanner.nextLine();
         System.out.print("Enter Email: ");
         e.email = ERPSystem.scanner.nextLine();
@@ -104,12 +103,12 @@ public class EmployeeManager {
         ERPSystem.scanner.nextLine();
 
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
-            Employee e = (Employee)ERPSystem.allEmployees.get(i);
+            FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
             if(e.id == id) {
                 System.out.print("Enter new name (current: " + e.name + "): ");
                 e.name = ERPSystem.scanner.nextLine();
-                System.out.print("Enter new salary (current: " + e.salary + "): ");
-                e.salary = ERPSystem.scanner.nextDouble();
+                System.out.print("Enter new salary (current: " + e.monthlySalary + "): ");
+                e.monthlySalary = ERPSystem.scanner.nextDouble();
                 ERPSystem.scanner.nextLine();
                 System.out.println("Employee updated!");
                 return;
@@ -159,7 +158,7 @@ public class EmployeeManager {
         ERPSystem.scanner.nextLine();
 
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
-            Employee e = (Employee)ERPSystem.allEmployees.get(i);
+            FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
             if(e.id == id) {
                 e.addBonus(amount);
                 return;
@@ -191,8 +190,8 @@ public class EmployeeManager {
             System.out.println("Total Employees: " + list.size());
             double totalSalary = 0;
             for(int i = 0; i < list.size(); i++) {
-                Employee e = (Employee)list.get(i);
-                totalSalary += e.salary;
+                FullTimeEmployee e = (FullTimeEmployee)list.get(i);
+                totalSalary += e.monthlySalary;
             }
             System.out.println("Total Salary Expense: $" + totalSalary);
         }

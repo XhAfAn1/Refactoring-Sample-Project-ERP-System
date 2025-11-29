@@ -1,12 +1,11 @@
 package com.erp.financeModules;
 
-import java.util.*;
-
 import com.erp.coreModules.ERPSystem;
 import com.erp.customerModules.Customer;
-import com.erp.employeeModules.Employee;
+import com.erp.employeeModules.FullTimeEmployee;
 import com.erp.supplierModules.PurchaseOrder;
 import com.erp.supplierModules.SupplierManager;
+import java.util.*;
 
 public class FinanceManager {
     public ArrayList transactions = new ArrayList();
@@ -156,8 +155,8 @@ public class FinanceManager {
 
         double salaryExpense = 0;
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
-            Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            salaryExpense += e.salary;
+            FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
+            salaryExpense += e.monthlySalary;
         }
         System.out.println("Employee Salaries: $" + salaryExpense);
     }
@@ -188,8 +187,8 @@ public class FinanceManager {
 
         double salaryExpense = 0;
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
-            Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            salaryExpense += e.salary * 12;
+            FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
+            salaryExpense += e.monthlySalary * 12;
         }
         System.out.println("Annual Salary Expense: $" + salaryExpense);
 
