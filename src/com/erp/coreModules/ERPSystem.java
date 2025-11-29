@@ -9,7 +9,7 @@ import com.erp.customerModules.OrderService;
 import com.erp.employeeModules.EmployeeManager;
 import com.erp.employeeModules.FullTimeEmployee;
 import com.erp.financeModules.FinanceManager;
-import com.erp.productModules.InventoryManager;
+import com.erp.productModules.InventoryConsoleUI;
 import com.erp.productModules.Product;
 import com.erp.reportModules.ReportManager;
 import com.erp.salesModules.SalesManager;
@@ -70,7 +70,7 @@ public class ERPSystem {
                 EmployeeManager em = new EmployeeManager();
                 em.showMenu();
             } else if (choice == 2) {
-                InventoryManager im = new InventoryManager();
+                InventoryConsoleUI im = new InventoryConsoleUI();
                 im.showMenu();
             } else if (choice == 3) {
                 SalesManager sm = new SalesManager();
