@@ -1,255 +1,339 @@
 package com.erp.supplierModules;
 
-import java.util.*;
-
 import com.erp.coreModules.ERPSystem;
 import com.erp.productModules.Product;
+import java.util.*;
 
 public class SupplierManager {
-    public ArrayList purchaseOrders = new ArrayList();
+    private static final int EXIT_CHOICE = 9;
+    private static final int FINISH_ADDING_ITEMS = 0;
+    
+    public ArrayList<PurchaseOrder> purchaseOrders = new ArrayList<>();
 
     public void showMenu() {
-        while(true) {
-            System.out.println("\n=== SUPPLIER MANAGEMENT ===");
-            System.out.println("1. Add Supplier");
-            System.out.println("2. View All Suppliers");
-            System.out.println("3. Update Supplier");
-            System.out.println("4. Delete Supplier");
-            System.out.println("5. Create Purchase Order");
-            System.out.println("6. View Purchase Orders");
-            System.out.println("7. Receive Purchase Order");
-            System.out.println("8. Supplier Performance");
-            System.out.println("9. Back");
-            System.out.print("Enter choice: ");
-
-            int choice = ERPSystem.scanner.nextInt();
-            ERPSystem.scanner.nextLine();
-
-            if(choice == 1) {
-                addSupplier();
-            } else if(choice == 2) {
-                viewAll();
-            } else if(choice == 3) {
-                updateSupplier();
-            } else if(choice == 4) {
-                deleteSupplier();
-            } else if(choice == 5) {
-                createPurchaseOrder();
-            } else if(choice == 6) {
-                viewPurchaseOrders();
-            } else if(choice == 7) {
-                receivePurchaseOrder();
-            } else if(choice == 8) {
-                supplierPerformance();
-            } else if(choice == 9) {
+        while (true) {
+            displayMenuOptions();
+            int choice = getUserChoice();
+            
+            if (choice == EXIT_CHOICE) {
                 break;
             }
+            
+            handleMenuChoice(choice);
+        }
+    }
+
+    private void displayMenuOptions() {
+        System.out.println("\n=== SUPPLIER MANAGEMENT ===");
+        System.out.println("1. Add Supplier");
+        System.out.println("2. View All Suppliers");
+        System.out.println("3. Update Supplier");
+        System.out.println("4. Delete Supplier");
+        System.out.println("5. Create Purchase Order");
+        System.out.println("6. View Purchase Orders");
+        System.out.println("7. Receive Purchase Order");
+        System.out.println("8. Supplier Performance");
+        System.out.println("9. Back");
+        System.out.print("Enter choice: ");
+    }
+
+    private int getUserChoice() {
+        int choice = ERPSystem.scanner.nextInt();
+        ERPSystem.scanner.nextLine();
+        return choice;
+    }
+
+    private void handleMenuChoice(int choice) {
+        switch (choice) {
+            case 1: addSupplier(); break;
+            case 2: viewAll(); break;
+            case 3: updateSupplier(); break;
+            case 4: deleteSupplier(); break;
+            case 5: createPurchaseOrder(); break;
+            case 6: viewPurchaseOrders(); break;
+            case 7: receivePurchaseOrder(); break;
+            case 8: supplierPerformance(); break;
         }
     }
 
     public void addSupplier() {
-        Supplier s = new Supplier();
-        System.out.print("Enter Supplier ID: ");
-        s.supplier_id = ERPSystem.scanner.nextInt();
-        ERPSystem.scanner.nextLine();
-        System.out.print("Enter Name: ");
-        s.supplier_name = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Contact Person: ");
-        s.supplier_contact = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Phone: ");
-        s.supplier_phone = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Email: ");
-        s.supplier_email = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Address: ");
-        s.supplier_address = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Payment Terms: ");
-        s.supplier_paymentTerms = ERPSystem.scanner.nextLine();
-
-        ERPSystem.allSuppliers.add(s);
+        Supplier supplier = createSupplierFromInput();
+        ERPSystem.allSuppliers.add(supplier);
         System.out.println("Supplier added successfully!");
+    }
+
+    private Supplier createSupplierFromInput() {
+        Supplier s = new Supplier();
+        s.supplier_id = readInt("Enter Supplier ID: ");
+        s.supplier_name = readLine("Enter Name: ");
+        s.supplier_contact = readLine("Enter Contact Person: ");
+        s.supplier_phone = readLine("Enter Phone: ");
+        s.supplier_email = readLine("Enter Email: ");
+        s.supplier_address = readLine("Enter Address: ");
+        s.supplier_paymentTerms = readLine("Enter Payment Terms: ");
+        return s;
     }
 
     public void viewAll() {
         System.out.println("\n=== ALL SUPPLIERS ===");
-        for(int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
-            Supplier s = (Supplier)ERPSystem.allSuppliers.get(i);
-            System.out.println("\n--- Supplier " + (i+1) + " ---");
+        for (int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
+            Supplier s = (Supplier) ERPSystem.allSuppliers.get(i);
+            System.out.println("\n--- Supplier " + (i + 1) + " ---");
             s.print();
         }
     }
 
     public void updateSupplier() {
-        System.out.print("Enter Supplier ID: ");
-        int id = ERPSystem.scanner.nextInt();
-        ERPSystem.scanner.nextLine();
-
-        for(int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
-            Supplier s = (Supplier)ERPSystem.allSuppliers.get(i);
-            if(s.supplier_id == id) {
-
-                System.out.print("Enter new phone (current: " + s.supplier_phone + "): ");
-                String newPhone = ERPSystem.scanner.nextLine();
-
-                System.out.print("Enter new email (current: " + s.supplier_email + "): ");
-                String newEmail = ERPSystem.scanner.nextLine();
-
-                System.out.print("Enter new rating (current: " + s.supplier_rating + "): ");
-                double newRating = ERPSystem.scanner.nextDouble();
-                ERPSystem.scanner.nextLine();
-
-                s.updateContactInfo(newPhone, newEmail, newRating);
-
-                System.out.println("Supplier updated!");
-                return;
-            }
+        int id = readInt("Enter Supplier ID: ");
+        Supplier supplier = findSupplierById(id);
+        
+        if (supplier == null) {
+            System.out.println("Supplier not found!");
+            return;
         }
-        System.out.println("Supplier not found!");
+        
+        updateSupplierDetails(supplier);
+        System.out.println("Supplier updated!");
+    }
+
+    private void updateSupplierDetails(Supplier supplier) {
+        String newPhone = readLine("Enter new phone (current: " + supplier.supplier_phone + "): ");
+        String newEmail = readLine("Enter new email (current: " + supplier.supplier_email + "): ");
+        double newRating = readDouble("Enter new rating (current: " + supplier.supplier_rating + "): ");
+        
+        supplier.updateContactInfo(newPhone, newEmail, newRating);
     }
 
     public void deleteSupplier() {
-        System.out.print("Enter Supplier ID: ");
-        int id = ERPSystem.scanner.nextInt();
-        ERPSystem.scanner.nextLine();
+        int id = readInt("Enter Supplier ID: ");
+        
+        if (removeSupplierById(id)) {
+            System.out.println("Supplier deleted!");
+        } else {
+            System.out.println("Supplier not found!");
+        }
+    }
 
-        for(int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
-            Supplier s = (Supplier)ERPSystem.allSuppliers.get(i);
-            if(s.supplier_id == id) {
+    private boolean removeSupplierById(int id) {
+        for (int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
+            Supplier s = (Supplier) ERPSystem.allSuppliers.get(i);
+            if (s.supplier_id == id) {
                 ERPSystem.allSuppliers.remove(i);
-                System.out.println("Supplier deleted!");
-                return;
+                return true;
             }
         }
-        System.out.println("Supplier not found!");
+        return false;
     }
 
     public void createPurchaseOrder() {
-        System.out.print("Enter Supplier ID: ");
-        int suppId = ERPSystem.scanner.nextInt();
-        ERPSystem.scanner.nextLine();
-
-        boolean found = false;
-        for(int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
-            Supplier s = (Supplier)ERPSystem.allSuppliers.get(i);
-            if(s.supplier_id == suppId) {
-                found = true;
-                break;
-            }
-        }
-
-        if(!found) {
+        int supplierId = readInt("Enter Supplier ID: ");
+        
+        if (!isValidSupplier(supplierId)) {
             System.out.println("Supplier not found!");
             return;
         }
 
-        PurchaseOrder po = new PurchaseOrder();
-        po.id = purchaseOrders.size() + 1;
-        po.supplierId = suppId;
-
-        System.out.println("Add items to purchase order (enter 0 to finish):");
-        while(true) {
-            System.out.print("Enter Product ID (0 to finish): ");
-            int prodId = ERPSystem.scanner.nextInt();
-            if(prodId == 0) break;
-
-            Product product = null;
-            for(int i = 0; i < ERPSystem.allProducts.size(); i++) {
-                Product p = (Product)ERPSystem.allProducts.get(i);
-                if(p.product_id == prodId) {
-                    product = p;
-                    break;
-                }
-            }
-
-            if(product == null) {
-                System.out.println("Product not found!");
-                continue;
-            }
-
-            System.out.print("Enter quantity: ");
-            int qty = ERPSystem.scanner.nextInt();
-            System.out.print("Enter cost per unit: ");
-            double cost = ERPSystem.scanner.nextDouble();
-            ERPSystem.scanner.nextLine();
-
-            PurchaseOrderItem item = new PurchaseOrderItem(prodId, product.product_name, qty, cost);
-            po.addItem(item);
-            System.out.println("Item added!");
-        }
-
-        if(po.items.size() == 0) {
+        PurchaseOrder po = buildPurchaseOrder(supplierId);
+        
+        if (po == null) {
             System.out.println("No items added. Purchase order cancelled.");
             return;
         }
 
+        savePurchaseOrder(po);
+        displayPurchaseOrderConfirmation(po);
+    }
+
+    private PurchaseOrder buildPurchaseOrder(int supplierId) {
+        PurchaseOrder po = initializePurchaseOrder(supplierId);
+        
+        System.out.println("Add items to purchase order (enter 0 to finish):");
+        addItemsToPurchaseOrder(po);
+        
+        return po.items.size() > 0 ? po : null;
+    }
+
+    private PurchaseOrder initializePurchaseOrder(int supplierId) {
+        PurchaseOrder po = new PurchaseOrder();
+        po.id = purchaseOrders.size() + 1;
+        po.supplierId = supplierId;
+        return po;
+    }
+
+    private void addItemsToPurchaseOrder(PurchaseOrder po) {
+        while (true) {
+            int productId = readInt("Enter Product ID (0 to finish): ");
+            
+            if (productId == FINISH_ADDING_ITEMS) {
+                break;
+            }
+
+            Product product = findProductById(productId);
+            
+            if (product == null) {
+                System.out.println("Product not found!");
+                continue;
+            }
+
+            PurchaseOrderItem item = createPurchaseOrderItem(productId, product);
+            po.addItem(item);
+            System.out.println("Item added!");
+        }
+    }
+
+    private PurchaseOrderItem createPurchaseOrderItem(int productId, Product product) {
+        int quantity = readInt("Enter quantity: ");
+        double cost = readDouble("Enter cost per unit: ");
+        return new PurchaseOrderItem(productId, product.product_name, quantity, cost);
+    }
+
+    private void savePurchaseOrder(PurchaseOrder po) {
         purchaseOrders.add(po);
         ERPSystem.totalExpenses += po.totalAmount;
+    }
 
+    private void displayPurchaseOrderConfirmation(PurchaseOrder po) {
         System.out.println("\nPurchase order created successfully!");
         po.print();
     }
 
     public void viewPurchaseOrders() {
         System.out.println("\n=== PURCHASE ORDERS ===");
-        for(int i = 0; i < purchaseOrders.size(); i++) {
-            PurchaseOrder po = (PurchaseOrder)purchaseOrders.get(i);
-            System.out.println("\n--- PO " + (i+1) + " ---");
+        for (int i = 0; i < purchaseOrders.size(); i++) {
+            PurchaseOrder po = (PurchaseOrder) purchaseOrders.get(i);
+            System.out.println("\n--- PO " + (i + 1) + " ---");
             po.print();
         }
     }
 
     public void receivePurchaseOrder() {
-        System.out.print("Enter Purchase Order ID: ");
-        int id = ERPSystem.scanner.nextInt();
-        ERPSystem.scanner.nextLine();
-
-        for(int i = 0; i < purchaseOrders.size(); i++) {
-            PurchaseOrder po = (PurchaseOrder)purchaseOrders.get(i);
-            if(po.id == id) {
-                if(po.status.equals("RECEIVED")) {
-                    System.out.println("PO already received!");
-                    return;
-                }
-
-                po.status = "RECEIVED";
-                po.deliveredDate = new Date();
-
-                for(int j = 0; j < po.items.size(); j++) {
-                    PurchaseOrderItem item = (PurchaseOrderItem)po.items.get(j);
-                    int currentStock = (Integer)ERPSystem.inventory.get(item.productId);
-                    ERPSystem.inventory.put(item.productId, currentStock + item.quantity);
-                }
-
-                for(int j = 0; j < ERPSystem.allSuppliers.size(); j++) {
-                    Supplier s = (Supplier)ERPSystem.allSuppliers.get(j);
-                    if(s.supplier_id == po.supplierId) {
-                        s.supplier_totalPurchases += po.totalAmount;
-                        break;
-                    }
-                }
-
-                System.out.println("Purchase order received and inventory updated!");
-                return;
-            }
+        int id = readInt("Enter Purchase Order ID: ");
+        PurchaseOrder po = findPurchaseOrderById(id);
+        
+        if (po == null) {
+            System.out.println("Purchase order not found!");
+            return;
         }
-        System.out.println("Purchase order not found!");
+        
+        if (isAlreadyReceived(po)) {
+            System.out.println("PO already received!");
+            return;
+        }
+
+        processPurchaseOrderReceipt(po);
+        System.out.println("Purchase order received and inventory updated!");
+    }
+
+    private void processPurchaseOrderReceipt(PurchaseOrder po) {
+        markAsReceived(po);
+        updateInventoryFromPurchaseOrder(po);
+        updateSupplierPurchaseTotal(po);
+    }
+
+    private void markAsReceived(PurchaseOrder po) {
+        po.status = "RECEIVED";
+        po.deliveredDate = new Date();
+    }
+
+    private boolean isAlreadyReceived(PurchaseOrder po) {
+        return "RECEIVED".equals(po.status);
+    }
+
+    private void updateInventoryFromPurchaseOrder(PurchaseOrder po) {
+        for (int i = 0; i < po.items.size(); i++) {
+            PurchaseOrderItem item = (PurchaseOrderItem) po.items.get(i);
+            updateProductInventory(item);
+        }
+    }
+
+    private void updateProductInventory(PurchaseOrderItem item) {
+        int currentStock = (Integer) ERPSystem.inventory.get(item.productId);
+        ERPSystem.inventory.put(item.productId, currentStock + item.quantity);
+    }
+
+    private void updateSupplierPurchaseTotal(PurchaseOrder po) {
+        Supplier supplier = findSupplierById(po.supplierId);
+        if (supplier != null) {
+            supplier.supplier_totalPurchases += po.totalAmount;
+        }
     }
 
     public void supplierPerformance() {
         System.out.println("\n=== SUPPLIER PERFORMANCE ===");
-        for(int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
-            Supplier s = (Supplier)ERPSystem.allSuppliers.get(i);
-            System.out.println("\nSupplier: " + s.supplier_name);
-            System.out.println("Rating: " + s.supplier_rating);
-            System.out.println("Total Purchases: $" + s.supplier_totalPurchases);
-
-            int poCount = 0;
-            for(int j = 0; j < purchaseOrders.size(); j++) {
-                PurchaseOrder po = (PurchaseOrder)purchaseOrders.get(j);
-                if(po.supplierId == s.supplier_id) {
-                    poCount++;
-                }
-            }
-            System.out.println("Total Purchase Orders: " + poCount);
+        for (int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
+            Supplier s = (Supplier) ERPSystem.allSuppliers.get(i);
+            displaySupplierPerformance(s);
         }
+    }
+
+    private void displaySupplierPerformance(Supplier supplier) {
+        System.out.println("\nSupplier: " + supplier.supplier_name);
+        System.out.println("Rating: " + supplier.supplier_rating);
+        System.out.println("Total Purchases: $" + supplier.supplier_totalPurchases);
+        System.out.println("Total Purchase Orders: " + countPurchaseOrdersForSupplier(supplier.supplier_id));
+    }
+
+    private int countPurchaseOrdersForSupplier(int supplierId) {
+        int count = 0;
+        for (int i = 0; i < purchaseOrders.size(); i++) {
+            PurchaseOrder po = (PurchaseOrder) purchaseOrders.get(i);
+            if (po.supplierId == supplierId) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private Supplier findSupplierById(int id) {
+        for (int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
+            Supplier s = (Supplier) ERPSystem.allSuppliers.get(i);
+            if (s.supplier_id == id) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    private boolean isValidSupplier(int supplierId) {
+        return findSupplierById(supplierId) != null;
+    }
+
+    private Product findProductById(int productId) {
+        for (int i = 0; i < ERPSystem.allProducts.size(); i++) {
+            Product p = (Product) ERPSystem.allProducts.get(i);
+            if (p.product_id == productId) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    private PurchaseOrder findPurchaseOrderById(int id) {
+        for (int i = 0; i < purchaseOrders.size(); i++) {
+            PurchaseOrder po = (PurchaseOrder) purchaseOrders.get(i);
+            if (po.id == id) {
+                return po;
+            }
+        }
+        return null;
+    }
+
+    private int readInt(String prompt) {
+        System.out.print(prompt);
+        int value = ERPSystem.scanner.nextInt();
+        ERPSystem.scanner.nextLine();
+        return value;
+    }
+
+    private double readDouble(String prompt) {
+        System.out.print(prompt);
+        double value = ERPSystem.scanner.nextDouble();
+        ERPSystem.scanner.nextLine();
+        return value;
+    }
+
+    private String readLine(String prompt) {
+        System.out.print(prompt);
+        return ERPSystem.scanner.nextLine();
     }
 }
