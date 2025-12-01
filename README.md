@@ -215,7 +215,6 @@ Even with poor design, the system is feature-rich.
 - System usage statistics  
 
 ---
----
 
 Despite the architectural flaws, the system is functionally rich:
 
