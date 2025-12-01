@@ -48,21 +48,21 @@ public class EmployeeManager {
     public void addEmployee() {
         FullTimeEmployee e = new FullTimeEmployee();
         System.out.print("Enter ID: ");
-        e.id = ERPSystem.scanner.nextInt();
+        e.employee_id = ERPSystem.scanner.nextInt();
         ERPSystem.scanner.nextLine();
         System.out.print("Enter Name: ");
-        e.name = ERPSystem.scanner.nextLine();
+        e.employee_name = ERPSystem.scanner.nextLine();
         System.out.print("Enter Department: ");
-        e.department = ERPSystem.scanner.nextLine();
+        e.employee_department = ERPSystem.scanner.nextLine();
         System.out.print("Enter Salary: ");
         e.monthlySalary = ERPSystem.scanner.nextDouble();
         ERPSystem.scanner.nextLine();
         System.out.print("Enter Email: ");
-        e.email = ERPSystem.scanner.nextLine();
+        e.employee_email = ERPSystem.scanner.nextLine();
         System.out.print("Enter Phone: ");
-        e.phone = ERPSystem.scanner.nextLine();
+        e.employee_phone = ERPSystem.scanner.nextLine();
         System.out.print("Enter Position: ");
-        e.position = ERPSystem.scanner.nextLine();
+        e.employee_position = ERPSystem.scanner.nextLine();
 
         ERPSystem.allEmployees.add(e);
         System.out.println("Employee added successfully!");
@@ -85,7 +85,7 @@ public class EmployeeManager {
         boolean found = false;
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            if(e.id == id) {
+            if(e.employee_id == id) {
                 e.print();
                 found = true;
                 break;
@@ -104,9 +104,9 @@ public class EmployeeManager {
 
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
-            if(e.id == id) {
-                System.out.print("Enter new name (current: " + e.name + "): ");
-                e.name = ERPSystem.scanner.nextLine();
+            if(e.employee_id == id) {
+                System.out.print("Enter new name (current: " + e.employee_name + "): ");
+                e.employee_name = ERPSystem.scanner.nextLine();
                 System.out.print("Enter new salary (current: " + e.monthlySalary + "): ");
                 e.monthlySalary = ERPSystem.scanner.nextDouble();
                 ERPSystem.scanner.nextLine();
@@ -124,7 +124,7 @@ public class EmployeeManager {
 
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            if(e.id == id) {
+            if(e.employee_id == id) {
                 ERPSystem.allEmployees.remove(i);
                 System.out.println("Employee deleted!");
                 return;
@@ -142,7 +142,7 @@ public class EmployeeManager {
 
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            if(e.id == id) {
+            if(e.employee_id == id) {
                 e.giveRaise(percent);
                 return;
             }
@@ -159,7 +159,7 @@ public class EmployeeManager {
 
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
-            if(e.id == id) {
+            if(e.employee_id == id) {
                 e.addBonus(amount);
                 return;
             }
@@ -171,13 +171,13 @@ public class EmployeeManager {
         HashMap deptMap = new HashMap();
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            if(deptMap.containsKey(e.department)) {
-                ArrayList list = (ArrayList)deptMap.get(e.department);
+            if(deptMap.containsKey(e.employee_department)) {
+                ArrayList list = (ArrayList)deptMap.get(e.employee_department);
                 list.add(e);
             } else {
                 ArrayList list = new ArrayList();
                 list.add(e);
-                deptMap.put(e.department, list);
+                deptMap.put(e.employee_department, list);
             }
         }
 

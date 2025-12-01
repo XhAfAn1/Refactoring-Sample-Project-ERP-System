@@ -8,16 +8,16 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
     @Override
     public void addProduct(Product p, int initialStock) {
         ERPSystem.allProducts.add(p);
-        ERPSystem.inventory.put(p.id, initialStock);
+        ERPSystem.inventory.put(p.product_id, initialStock);
     }
 
     @Override
     public boolean updateProduct(int id, double newPrice, double newCost) {
         for (Object obj : ERPSystem.allProducts) {
             Product p = (Product) obj;
-            if (p.id == id) {
-                p.price = newPrice;
-                p.cost = newCost;
+            if (p.product_id == id) {
+                p.product_price = newPrice;
+                p.product_cost = newCost;
                 return true;
             }
         }
@@ -29,7 +29,7 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
         Iterator it = ERPSystem.allProducts.iterator();
         while (it.hasNext()) {
             Product p = (Product) it.next();
-            if (p.id == id) {
+            if (p.product_id == id) {
                 it.remove();
                 ERPSystem.inventory.remove(id);
                 return true;
@@ -82,8 +82,8 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
         List<Product> lowStock = new ArrayList<>();
         for (Object obj : ERPSystem.allProducts) {
             Product p = (Product) obj;
-            int stock = (Integer) ERPSystem.inventory.get(p.id);
-            if (stock <= p.reorderLevel) {
+            int stock = (Integer) ERPSystem.inventory.get(p.product_id);
+            if (stock <= p.product_reorderLevel) {
                 lowStock.add(p);
             }
         }
@@ -95,10 +95,10 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
         Map<String, List<Product>> map = new HashMap<>();
         for (Object obj : ERPSystem.allProducts) {
             Product p = (Product) obj;
-            if (!map.containsKey(p.category)) {
-                map.put(p.category, new ArrayList<>());
+            if (!map.containsKey(p.product_category)) {
+                map.put(p.product_category, new ArrayList<>());
             }
-            map.get(p.category).add(p);
+            map.get(p.product_category).add(p);
         }
         return map;
     }

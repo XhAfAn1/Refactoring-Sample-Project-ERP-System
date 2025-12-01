@@ -50,20 +50,20 @@ public class SupplierManager {
     public void addSupplier() {
         Supplier s = new Supplier();
         System.out.print("Enter Supplier ID: ");
-        s.id = ERPSystem.scanner.nextInt();
+        s.supplier_id = ERPSystem.scanner.nextInt();
         ERPSystem.scanner.nextLine();
         System.out.print("Enter Name: ");
-        s.name = ERPSystem.scanner.nextLine();
+        s.supplier_name = ERPSystem.scanner.nextLine();
         System.out.print("Enter Contact Person: ");
-        s.contact = ERPSystem.scanner.nextLine();
+        s.supplier_contact = ERPSystem.scanner.nextLine();
         System.out.print("Enter Phone: ");
-        s.phone = ERPSystem.scanner.nextLine();
+        s.supplier_phone = ERPSystem.scanner.nextLine();
         System.out.print("Enter Email: ");
-        s.email = ERPSystem.scanner.nextLine();
+        s.supplier_email = ERPSystem.scanner.nextLine();
         System.out.print("Enter Address: ");
-        s.address = ERPSystem.scanner.nextLine();
+        s.supplier_address = ERPSystem.scanner.nextLine();
         System.out.print("Enter Payment Terms: ");
-        s.paymentTerms = ERPSystem.scanner.nextLine();
+        s.supplier_paymentTerms = ERPSystem.scanner.nextLine();
 
         ERPSystem.allSuppliers.add(s);
         System.out.println("Supplier added successfully!");
@@ -85,13 +85,13 @@ public class SupplierManager {
 
         for(int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
             Supplier s = (Supplier)ERPSystem.allSuppliers.get(i);
-            if(s.id == id) {
-                System.out.print("Enter new phone (current: " + s.phone + "): ");
-                s.phone = ERPSystem.scanner.nextLine();
-                System.out.print("Enter new email (current: " + s.email + "): ");
-                s.email = ERPSystem.scanner.nextLine();
-                System.out.print("Enter new rating (current: " + s.rating + "): ");
-                s.rating = ERPSystem.scanner.nextDouble();
+            if(s.supplier_id == id) {
+                System.out.print("Enter new phone (current: " + s.supplier_phone + "): ");
+                s.supplier_phone = ERPSystem.scanner.nextLine();
+                System.out.print("Enter new email (current: " + s.supplier_email + "): ");
+                s.supplier_email = ERPSystem.scanner.nextLine();
+                System.out.print("Enter new rating (current: " + s.supplier_rating + "): ");
+                s.supplier_rating = ERPSystem.scanner.nextDouble();
                 ERPSystem.scanner.nextLine();
                 System.out.println("Supplier updated!");
                 return;
@@ -107,7 +107,7 @@ public class SupplierManager {
 
         for(int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
             Supplier s = (Supplier)ERPSystem.allSuppliers.get(i);
-            if(s.id == id) {
+            if(s.supplier_id == id) {
                 ERPSystem.allSuppliers.remove(i);
                 System.out.println("Supplier deleted!");
                 return;
@@ -124,7 +124,7 @@ public class SupplierManager {
         boolean found = false;
         for(int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
             Supplier s = (Supplier)ERPSystem.allSuppliers.get(i);
-            if(s.id == suppId) {
+            if(s.supplier_id == suppId) {
                 found = true;
                 break;
             }
@@ -148,7 +148,7 @@ public class SupplierManager {
             Product product = null;
             for(int i = 0; i < ERPSystem.allProducts.size(); i++) {
                 Product p = (Product)ERPSystem.allProducts.get(i);
-                if(p.id == prodId) {
+                if(p.product_id == prodId) {
                     product = p;
                     break;
                 }
@@ -165,7 +165,7 @@ public class SupplierManager {
             double cost = ERPSystem.scanner.nextDouble();
             ERPSystem.scanner.nextLine();
 
-            PurchaseOrderItem item = new PurchaseOrderItem(prodId, product.name, qty, cost);
+            PurchaseOrderItem item = new PurchaseOrderItem(prodId, product.product_name, qty, cost);
             po.addItem(item);
             System.out.println("Item added!");
         }
@@ -215,8 +215,8 @@ public class SupplierManager {
 
                 for(int j = 0; j < ERPSystem.allSuppliers.size(); j++) {
                     Supplier s = (Supplier)ERPSystem.allSuppliers.get(j);
-                    if(s.id == po.supplierId) {
-                        s.totalPurchases += po.totalAmount;
+                    if(s.supplier_id == po.supplierId) {
+                        s.supplier_totalPurchases += po.totalAmount;
                         break;
                     }
                 }
@@ -232,14 +232,14 @@ public class SupplierManager {
         System.out.println("\n=== SUPPLIER PERFORMANCE ===");
         for(int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
             Supplier s = (Supplier)ERPSystem.allSuppliers.get(i);
-            System.out.println("\nSupplier: " + s.name);
-            System.out.println("Rating: " + s.rating);
-            System.out.println("Total Purchases: $" + s.totalPurchases);
+            System.out.println("\nSupplier: " + s.supplier_name);
+            System.out.println("Rating: " + s.supplier_rating);
+            System.out.println("Total Purchases: $" + s.supplier_totalPurchases);
 
             int poCount = 0;
             for(int j = 0; j < purchaseOrders.size(); j++) {
                 PurchaseOrder po = (PurchaseOrder)purchaseOrders.get(j);
-                if(po.supplierId == s.id) {
+                if(po.supplierId == s.supplier_id) {
                     poCount++;
                 }
             }

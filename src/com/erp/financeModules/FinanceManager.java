@@ -210,10 +210,10 @@ public class FinanceManager {
 
         for(int i = 0; i < ERPSystem.allCustomers.size(); i++) {
             Customer c = (Customer)ERPSystem.allCustomers.get(i);
-            if(c.currentBalance > 0) {
-                System.out.println("\nCustomer: " + c.name);
-                System.out.println("Outstanding: $" + c.currentBalance);
-                totalReceivable += c.currentBalance;
+            if(c.customer_currentBalance > 0) {
+                System.out.println("\nCustomer: " + c.customer_name);
+                System.out.println("Outstanding: $" + c.customer_currentBalance);
+                totalReceivable += c.customer_currentBalance;
             }
         }
 

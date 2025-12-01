@@ -3,38 +3,38 @@ package com.erp.customerModules;
 import java.util.*;
 
 public class Customer {
-    public int id;
-    public String name;
-    public String email;
-    public String phone;
-    public String address;
-    public double creditLimit;
-    public double currentBalance;
-    public String type;
-    public Date registrationDate;
-    public boolean isActive;
-    public String contactPerson;
-    public ArrayList orderHistory;
+    public int customer_id;
+    public String customer_name;
+    public String customer_email;
+    public String customer_phone;
+    public String customer_address;
+    public double customer_creditLimit;
+    public double customer_currentBalance;
+    public String customer_type;
+    public Date customer_registrationDate;
+    public boolean customer_isActive;
+    public String customer_contactPerson;
+    public ArrayList customer_orderHistory;
 
     public Customer() {
-        registrationDate = new Date();
-        isActive = true;
-        currentBalance = 0;
-        orderHistory = new ArrayList();
+        customer_registrationDate = new Date();
+        customer_isActive = true;
+        customer_currentBalance = 0;
+        customer_orderHistory = new ArrayList();
     }
 
     public void print() {
-        System.out.println("Customer ID: " + id);
-        System.out.println("Name: " + name);
-        System.out.println("Email: " + email);
-        System.out.println("Phone: " + phone);
-        System.out.println("Credit Limit: $" + creditLimit);
-        System.out.println("Current Balance: $" + currentBalance);
-        System.out.println("Active: " + isActive);
+        System.out.println("Customer ID: " + customer_id);
+        System.out.println("Name: " + customer_name);
+        System.out.println("Email: " + customer_email);
+        System.out.println("Phone: " + customer_phone);
+        System.out.println("Credit Limit: $" + customer_creditLimit);
+        System.out.println("Current Balance: $" + customer_currentBalance);
+        System.out.println("Active: " + customer_isActive);
     }
 
     public double getAvailableCredit() {
-        return creditLimit - currentBalance;
+        return customer_creditLimit - customer_currentBalance;
     }
 
     public boolean canPlaceOrder(double amount) {

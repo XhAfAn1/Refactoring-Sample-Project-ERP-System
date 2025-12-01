@@ -24,22 +24,22 @@ public class CustomerService {
     public void updateCustomerContact(int id, String email, String phone) {
         Customer c = repo.findById(id);
         if (c != null) {
-            c.email = email;
-            c.phone = phone;
+            c.customer_email = email;
+            c.customer_phone = phone;
         }
     }
 
     public void updateCreditLimit(int id, double limit) {
         Customer c = repo.findById(id);
         if (c != null) {
-            c.creditLimit = limit;
+            c.customer_creditLimit = limit;
         }
     }
 
     public double calculateTotalOutstanding() {
         double total = 0;
         for (Customer c : repo.getAll()) {
-            total += c.currentBalance;
+            total += c.customer_currentBalance;
         }
         return total;
     }

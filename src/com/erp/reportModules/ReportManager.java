@@ -94,9 +94,9 @@ public class ReportManager {
 
         for(int i = 0; i < ERPSystem.allProducts.size(); i++) {
             Product p = (Product)ERPSystem.allProducts.get(i);
-            int stock = (Integer)ERPSystem.inventory.get(p.id);
+            int stock = (Integer)ERPSystem.inventory.get(p.product_id);
             totalStock += stock;
-            totalInventoryValue += (p.cost * stock);
+            totalInventoryValue += (p.product_cost * stock);
         }
 
         System.out.println("Total Stock Units: " + totalStock);
@@ -105,17 +105,17 @@ public class ReportManager {
         System.out.println("\n=== Stock Levels ===");
         for(int i = 0; i < ERPSystem.allProducts.size(); i++) {
             Product p = (Product)ERPSystem.allProducts.get(i);
-            int stock = (Integer)ERPSystem.inventory.get(p.id);
-            System.out.println(p.name + ": " + stock + " units");
+            int stock = (Integer)ERPSystem.inventory.get(p.product_id);
+            System.out.println(p.product_name + ": " + stock + " units");
         }
 
         System.out.println("\n=== Low Stock Items ===");
         int lowStockCount = 0;
         for(int i = 0; i < ERPSystem.allProducts.size(); i++) {
             Product p = (Product)ERPSystem.allProducts.get(i);
-            int stock = (Integer)ERPSystem.inventory.get(p.id);
-            if(stock <= p.reorderLevel) {
-                System.out.println(p.name + ": " + stock + " (Reorder Level: " + p.reorderLevel + ")");
+            int stock = (Integer)ERPSystem.inventory.get(p.product_id);
+            if(stock <= p.product_reorderLevel) {
+                System.out.println(p.product_name + ": " + stock + " (Reorder Level: " + p.product_reorderLevel + ")");
                 lowStockCount++;
             }
         }
@@ -135,11 +135,11 @@ public class ReportManager {
             FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
             totalSalary += e.monthlySalary;
 
-            if(deptCount.containsKey(e.department)) {
-                int count = (Integer)deptCount.get(e.department);
-                deptCount.put(e.department, count + 1);
+            if(deptCount.containsKey(e.employee_department)) {
+                int count = (Integer)deptCount.get(e.employee_department);
+                deptCount.put(e.employee_department, count + 1);
             } else {
-                deptCount.put(e.department, 1);
+                deptCount.put(e.employee_department, 1);
             }
         }
 
@@ -169,9 +169,9 @@ public class ReportManager {
 
         for(int i = 0; i < ERPSystem.allCustomers.size(); i++) {
             Customer c = (Customer)ERPSystem.allCustomers.get(i);
-            totalCreditLimit += c.creditLimit;
-            totalBalance += c.currentBalance;
-            if(c.isActive) activeCustomers++;
+            totalCreditLimit += c.customer_creditLimit;
+            totalBalance += c.customer_currentBalance;
+            if(c.customer_isActive) activeCustomers++;
         }
 
         System.out.println("Active Customers: " + activeCustomers);
@@ -197,8 +197,8 @@ public class ReportManager {
 
             for(int i = 0; i < ERPSystem.allCustomers.size(); i++) {
                 Customer c = (Customer)ERPSystem.allCustomers.get(i);
-                if(c.id == custId) {
-                    System.out.println(c.name + ": $" + total);
+                if(c.customer_id == custId) {
+                    System.out.println(c.customer_name + ": $" + total);
                     break;
                 }
             }
@@ -232,15 +232,15 @@ public class ReportManager {
         System.out.println("\n=== Sales by Product ===");
         for(int i = 0; i < ERPSystem.allProducts.size(); i++) {
             Product p = (Product)ERPSystem.allProducts.get(i);
-            if(productSales.containsKey(p.id)) {
-                int qty = (Integer)productSales.get(p.id);
-                double rev = (Double)productRevenue.get(p.id);
-                System.out.println("\nProduct: " + p.name);
+            if(productSales.containsKey(p.product_id)) {
+                int qty = (Integer)productSales.get(p.product_id);
+                double rev = (Double)productRevenue.get(p.product_id);
+                System.out.println("\nProduct: " + p.product_name);
                 System.out.println("Units Sold: " + qty);
                 System.out.println("Revenue: $" + rev);
-                System.out.println("Profit: $" + (rev - (p.cost * qty)));
+                System.out.println("Profit: $" + (rev - (p.product_cost * qty)));
             } else {
-                System.out.println("\nProduct: " + p.name);
+                System.out.println("\nProduct: " + p.product_name);
                 System.out.println("Units Sold: 0");
             }
         }
@@ -264,15 +264,15 @@ public class ReportManager {
         double totalAR = 0;
         for(int i = 0; i < ERPSystem.allCustomers.size(); i++) {
             Customer c = (Customer)ERPSystem.allCustomers.get(i);
-            totalAR += c.currentBalance;
+            totalAR += c.customer_currentBalance;
         }
         System.out.println("\nAccounts Receivable: $" + totalAR);
 
         double inventoryValue = 0;
         for(int i = 0; i < ERPSystem.allProducts.size(); i++) {
             Product p = (Product)ERPSystem.allProducts.get(i);
-            int stock = (Integer)ERPSystem.inventory.get(p.id);
-            inventoryValue += (p.cost * stock);
+            int stock = (Integer)ERPSystem.inventory.get(p.product_id);
+            inventoryValue += (p.product_cost * stock);
         }
         System.out.println("Inventory Value: $" + inventoryValue);
 
@@ -299,7 +299,7 @@ public class ReportManager {
         int totalStock = 0;
         for(int i = 0; i < ERPSystem.allProducts.size(); i++) {
             Product p = (Product)ERPSystem.allProducts.get(i);
-            int stock = (Integer)ERPSystem.inventory.get(p.id);
+            int stock = (Integer)ERPSystem.inventory.get(p.product_id);
             totalStock += stock;
         }
         System.out.println("Total Stock: " + totalStock);
@@ -337,15 +337,15 @@ public class ReportManager {
             System.out.println("ID,Name,Department,Salary,Email");
             for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
                 FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
-                System.out.println(e.id + "," + e.name + "," + e.department + "," + e.monthlySalary + "," + e.email);
+                System.out.println(e.employee_id + "," + e.employee_name + "," + e.employee_department + "," + e.monthlySalary + "," + e.employee_manager);
             }
         } else if(choice == 2) {
             System.out.println("\nExporting products to products.txt...");
             System.out.println("ID,Name,Price,Category,Stock");
             for(int i = 0; i < ERPSystem.allProducts.size(); i++) {
                 Product p = (Product)ERPSystem.allProducts.get(i);
-                int stock = (Integer)ERPSystem.inventory.get(p.id);
-                System.out.println(p.id + "," + p.name + "," + p.price + "," + p.category + "," + stock);
+                int stock = (Integer)ERPSystem.inventory.get(p.product_id);
+                System.out.println(p.product_id + "," + p.product_name + "," + p.product_price + "," + p.product_category + "," + stock);
             }
         } else if(choice == 3) {
             System.out.println("\nExporting orders to orders.txt...");
@@ -359,7 +359,7 @@ public class ReportManager {
             System.out.println("ID,Name,Email,Phone,CreditLimit,Balance");
             for(int i = 0; i < ERPSystem.allCustomers.size(); i++) {
                 Customer c = (Customer)ERPSystem.allCustomers.get(i);
-                System.out.println(c.id + "," + c.name + "," + c.email + "," + c.phone + "," + c.creditLimit + "," + c.currentBalance);
+                System.out.println(c.customer_id + "," + c.customer_name + "," + c.customer_email + "," + c.customer_phone + "," + c.customer_creditLimit + "," + c.customer_currentBalance);
             }
         }
 

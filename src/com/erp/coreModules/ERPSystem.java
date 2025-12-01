@@ -101,50 +101,50 @@ public class ERPSystem {
 
     public static void initializeData() {
         FullTimeEmployee e1 = new FullTimeEmployee();
-        e1.id = 1;
-        e1.name = "John Doe";
-        e1.department = "IT";
+        e1.employee_id = 1;
+        e1.employee_name = "John Doe";
+        e1.employee_department = "IT";
         e1.monthlySalary = 50000;
-        e1.email = "john@company.com";
+        e1.employee_email = "john@company.com";
         allEmployees.add(e1);
 
         FullTimeEmployee e2 = new FullTimeEmployee();
-        e2.id = 2;
-        e2.name = "Jane Smith";
-        e2.department = "HR";
+        e2.employee_id = 2;
+        e2.employee_name = "Jane Smith";
+        e2.employee_department = "HR";
         e2.monthlySalary = 45000;
-        e2.email = "jane@company.com";
+        e2.employee_email = "jane@company.com";
         allEmployees.add(e2);
 
         Product p1 = new Product();
-        p1.id = 1;
-        p1.name = "Laptop";
-        p1.price = 1200.0;
-        p1.category = "Electronics";
+        p1.product_id = 1;
+        p1.product_name = "Laptop";
+        p1.product_price = 1200.0;
+        p1.product_category = "Electronics";
         allProducts.add(p1);
         inventory.put(1, 50);
 
         Product p2 = new Product();
-        p2.id = 2;
-        p2.name = "Mouse";
-        p2.price = 25.0;
-        p2.category = "Electronics";
+        p2.product_id = 2;
+        p2.product_name = "Mouse";
+        p2.product_price = 25.0;
+        p2.product_category = "Electronics";
         allProducts.add(p2);
         inventory.put(2, 200);
 
         Customer c1 = new Customer();
-        c1.id = 1;
-        c1.name = "ABC Corp";
-        c1.email = "contact@abc.com";
-        c1.phone = "123-456-7890";
-        c1.creditLimit = 50000;
+        c1.customer_id = 1;
+        c1.customer_name = "ABC Corp";
+        c1.customer_email = "contact@abc.com";
+        c1.customer_phone = "123-456-7890";
+        c1.customer_creditLimit = 50000;
         allCustomers.add(c1);
 
         Supplier s1 = new Supplier();
-        s1.id = 1;
-        s1.name = "Tech Supplies Inc";
-        s1.contact = "supplier@tech.com";
-        s1.phone = "987-654-3210";
+        s1.supplier_id = 1;
+        s1.supplier_name = "Tech Supplies Inc";
+        s1.supplier_contact = "supplier@tech.com";
+        s1.supplier_phone = "987-654-3210";
         allSuppliers.add(s1);
     }
 }

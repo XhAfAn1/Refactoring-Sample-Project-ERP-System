@@ -55,7 +55,7 @@ public class SalesManager {
         Customer customer = null;
         for(int i = 0; i < ERPSystem.allCustomers.size(); i++) {
             Customer c = (Customer)ERPSystem.allCustomers.get(i);
-            if(c.id == custId) {
+            if(c.customer_id == custId) {
                 custFound = true;
                 customer = c;
                 break;
@@ -80,7 +80,7 @@ public class SalesManager {
             Product product = null;
             for(int i = 0; i < ERPSystem.allProducts.size(); i++) {
                 Product p = (Product)ERPSystem.allProducts.get(i);
-                if(p.id == prodId) {
+                if(p.product_id == prodId) {
                     product = p;
                     break;
                 }
@@ -101,7 +101,7 @@ public class SalesManager {
                 continue;
             }
 
-            OrderItem item = new OrderItem(prodId, product.name, qty, product.price);
+            OrderItem item = new OrderItem(prodId, product.product_name, qty, product.product_price);
             order.addItem(item);
 
             ERPSystem.inventory.put(prodId, stock - qty);
@@ -133,7 +133,7 @@ public class SalesManager {
             }
         }
 
-        customer.currentBalance += order.totalAmount;
+        customer.customer_currentBalance += order.totalAmount;
         ERPSystem.allOrders.add(order);
         ERPSystem.totalRevenue += order.totalAmount;
 
@@ -213,8 +213,8 @@ public class SalesManager {
 
                 for(int j = 0; j < ERPSystem.allCustomers.size(); j++) {
                     Customer c = (Customer)ERPSystem.allCustomers.get(j);
-                    if(c.id == o.customerId) {
-                        c.currentBalance -= o.totalAmount;
+                    if(c.customer_id == o.customerId) {
+                        c.customer_currentBalance -= o.totalAmount;
                         break;
                     }
                 }
@@ -240,10 +240,10 @@ public class SalesManager {
 
                 for(int j = 0; j < ERPSystem.allCustomers.size(); j++) {
                     Customer c = (Customer)ERPSystem.allCustomers.get(j);
-                    if(c.id == o.customerId) {
-                        c.currentBalance -= o.totalAmount;
+                    if(c.customer_id == o.customerId) {
+                        c.customer_currentBalance -= o.totalAmount;
                         System.out.println("Payment processed!");
-                        System.out.println("New balance: $" + c.currentBalance);
+                        System.out.println("New balance: $" + c.customer_currentBalance);
                         return;
                     }
                 }
@@ -300,8 +300,8 @@ public class SalesManager {
 
             for(int i = 0; i < ERPSystem.allCustomers.size(); i++) {
                 Customer c = (Customer)ERPSystem.allCustomers.get(i);
-                if(c.id == custId) {
-                    System.out.println("\nCustomer: " + c.name);
+                if(c.customer_id == custId) {
+                    System.out.println("\nCustomer: " + c.customer_name);
                     System.out.println("Total Purchases: $" + total);
                     break;
                 }

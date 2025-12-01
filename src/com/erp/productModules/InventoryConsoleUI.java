@@ -42,13 +42,13 @@ public class InventoryConsoleUI {
 
     private void addProductUI() {
         Product p = new Product();
-        System.out.print("Enter ID: "); p.id = ERPSystem.scanner.nextInt(); ERPSystem.scanner.nextLine();
-        System.out.print("Enter Name: "); p.name = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Price: "); p.price = ERPSystem.scanner.nextDouble(); ERPSystem.scanner.nextLine();
-        System.out.print("Enter Category: "); p.category = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Cost: "); p.cost = ERPSystem.scanner.nextDouble(); ERPSystem.scanner.nextLine();
+        System.out.print("Enter ID: "); p.product_id = ERPSystem.scanner.nextInt(); ERPSystem.scanner.nextLine();
+        System.out.print("Enter Name: "); p.product_name = ERPSystem.scanner.nextLine();
+        System.out.print("Enter Price: "); p.product_price = ERPSystem.scanner.nextDouble(); ERPSystem.scanner.nextLine();
+        System.out.print("Enter Category: "); p.product_category = ERPSystem.scanner.nextLine();
+        System.out.print("Enter Cost: "); p.product_cost = ERPSystem.scanner.nextDouble(); ERPSystem.scanner.nextLine();
         System.out.print("Enter Initial Stock: "); int stock = ERPSystem.scanner.nextInt(); ERPSystem.scanner.nextLine();
-        System.out.print("Enter Reorder Level: "); p.reorderLevel = ERPSystem.scanner.nextInt(); ERPSystem.scanner.nextLine();
+        System.out.print("Enter Reorder Level: "); p.product_reorderLevel = ERPSystem.scanner.nextInt(); ERPSystem.scanner.nextLine();
 
         service.addProduct(p, stock);
         System.out.println("Product added successfully!");
@@ -97,7 +97,7 @@ public class InventoryConsoleUI {
         for (Product p : products) {
             System.out.println("\n--- Product ---");
             p.print();
-            System.out.println("Stock: " + stock.get(p.id));
+            System.out.println("Stock: " + stock.get(p.product_id));
             System.out.println("Profit Margin: " + p.calculateProfitMargin() + "%");
         }
     }
@@ -107,7 +107,7 @@ public class InventoryConsoleUI {
         System.out.println("\n=== LOW STOCK ===");
         if (lows.isEmpty()) System.out.println("No low stock items.");
         for (Product p : lows) {
-            System.out.println("Low stock: " + p.name + " (Reorder Level: " + p.reorderLevel + ")");
+            System.out.println("Low stock: " + p.product_name + " (Reorder Level: " + p.product_reorderLevel + ")");
         }
     }
 

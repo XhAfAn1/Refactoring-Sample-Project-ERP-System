@@ -18,7 +18,7 @@ public class CustomerRepository implements ICustomerRepository {
     @Override
     public Customer findById(int id) {
         for (Customer c : customers) {
-            if (c.id == id) return c;
+            if (c.customer_id == id) return c;
         }
         return null;
     }
