@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Transaction {
     public int id;
-    public TransactionType type; // Refactored: String -> Enum
+    public TransactionType type; 
     public double amount;
     public Date date;
     public String description;

@@ -16,9 +16,7 @@ public class SalesAnalytics {
 
         int pending = 0, confirmed = 0, shipped = 0, delivered = 0, cancelled = 0;
 
-        // Refactored: Removed unsafe casting (ERPSystem now uses Generics)
         for (Order o : (ArrayList<Order>)ERPSystem.allOrders) {
-            // Refactored: Switch on Enum constants instead of Strings
             switch (o.status) {
                 case PENDING -> pending++;
                 case CONFIRMED -> confirmed++;
@@ -44,7 +42,6 @@ public class SalesAnalytics {
     public void topCustomers() {
         Map<Integer, Double> customerOrders = new HashMap<>();
 
-        // Refactored: Removed unsafe casting
         for (Order o : (ArrayList<Order>)ERPSystem.allOrders) {
             customerOrders.put(o.customerId,
                     customerOrders.getOrDefault(o.customerId, 0.0) + o.totalAmount);
@@ -55,7 +52,6 @@ public class SalesAnalytics {
         for (Integer custId : customerOrders.keySet()) {
             double total = customerOrders.get(custId);
 
-            // Refactored: Removed unsafe casting
             for (Customer c : (ArrayList<Customer>)ERPSystem.allCustomers) {
                 if (c.customer_id == custId) {
                     System.out.println("\nCustomer: " + c.customer_name);

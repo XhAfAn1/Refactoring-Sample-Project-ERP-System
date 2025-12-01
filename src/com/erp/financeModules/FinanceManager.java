@@ -10,7 +10,6 @@ import com.erp.supplierModules.SupplierManager;
 import java.util.*;
 
 public class FinanceManager {
-    // Refactored: Use Generic List instead of raw ArrayList
     public List<Transaction> transactions = new ArrayList<>();
 
     public void showMenu() {
@@ -53,7 +52,6 @@ public class FinanceManager {
         int typeChoice = ERPSystem.scanner.nextInt();
         ERPSystem.scanner.nextLine();
 
-        // Refactored: Assign Enum instead of String
         if(typeChoice == 1) {
             t.type = TransactionType.INCOME;
         } else {
@@ -72,7 +70,6 @@ public class FinanceManager {
 
         transactions.add(t);
 
-        // Refactored: Enum comparison
         if(t.type == TransactionType.INCOME) {
             ERPSystem.totalRevenue += t.amount;
         } else {
@@ -91,13 +88,11 @@ public class FinanceManager {
         }
     }
 
-    // Refactored: Helper method using Enums to fix Duplicate Code
     private void generateCategoryReport(String title, TransactionType type, String totalLabel) {
         double total = 0;
         HashMap<String, Double> categories = new HashMap<>();
 
         for(Transaction t : transactions) {
-            // Refactored: Enum equality check
             if(t.type == type) {
                 total += t.amount;
 
@@ -118,11 +113,8 @@ public class FinanceManager {
         System.out.println("\n" + totalLabel + ": $" + total);
     }
 
-    // Refactored: Extracted Logic to fix Duplicate Code
     private double calculateTotalMonthlySalaries() {
         double total = 0;
-        // Note: Casting to FullTimeEmployee is a temporary limitation (Liskov substitution smell)
-        // kept here as per scope, but ideally Employee should have abstract getSalary()
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
             total += e.monthlySalary;
@@ -146,7 +138,6 @@ public class FinanceManager {
         double totalExpense = 0;
 
         for(Transaction t : transactions) {
-            // Refactored: Enum comparison
             if(t.type == TransactionType.INCOME) {
                 totalIncome += t.amount;
             } else {
@@ -184,7 +175,6 @@ public class FinanceManager {
         System.out.println("\n=== ACCOUNTS RECEIVABLE ===");
         double totalReceivable = 0;
 
-        // Refactored loop using Generic List from ERPSystem
         for(Customer c : (ArrayList<Customer>)ERPSystem.allCustomers) {
             if(c.customer_currentBalance > 0) {
                 System.out.println("\nCustomer: " + c.customer_name);
@@ -201,10 +191,8 @@ public class FinanceManager {
         double totalPayable = 0;
 
         SupplierManager sm = new SupplierManager();
-        // Refactored to use Generic List if SupplierManager was updated, or cast safely
         for(Object obj : sm.purchaseOrders) {
             PurchaseOrder po = (PurchaseOrder)obj;
-            // Refactored: Enum comparison
             if(po.paymentStatus == PaymentStatus.UNPAID) {
                 System.out.println("\nPO ID: " + po.id);
                 System.out.println("Supplier ID: " + po.supplierId);

@@ -8,17 +8,17 @@ public class PurchaseOrder {
     public int supplierId;
     public Date orderDate;
     public Date expectedDelivery;
-    public String status; // Kept as String (PENDING/RECEIVED) as it doesn't match OrderStatus perfecty
+    public String status; 
     public ArrayList items;
     public double totalAmount;
-    public PaymentStatus paymentStatus; // Refactored: String -> Enum
+    public PaymentStatus paymentStatus; 
     public Date deliveredDate;
 
     public PurchaseOrder() {
         orderDate = new Date();
         status = "PENDING";
         items = new ArrayList();
-        paymentStatus = PaymentStatus.UNPAID; // Refactored
+        paymentStatus = PaymentStatus.UNPAID; 
     }
 
     public void addItem(PurchaseOrderItem item) {

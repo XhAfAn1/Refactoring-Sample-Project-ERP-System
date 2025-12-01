@@ -3,8 +3,7 @@ package com.erp.salesModules;
 import com.erp.coreModules.ERPSystem;
 import com.erp.customerModules.Customer;
 import com.erp.enums.OrderStatus;
-import java.util.ArrayList; // Import the Enum
-// Removed java.util.ArrayList import as explicit casting is no longer needed
+import java.util.ArrayList; 
 
 public class OrderUpdater {
 
@@ -13,7 +12,6 @@ public class OrderUpdater {
         int id = ERPSystem.scanner.nextInt();
         ERPSystem.scanner.nextLine();
 
-        // Refactored: Removed unsafe cast (ArrayList<Order>)
         for (Order o : (ArrayList<Order>)ERPSystem.allOrders) {
             if (o.id == id) {
 
@@ -50,17 +48,15 @@ public class OrderUpdater {
         int id = ERPSystem.scanner.nextInt();
         ERPSystem.scanner.nextLine();
 
-        // Refactored: Removed unsafe cast
         for (Order o : (ArrayList<Order>)ERPSystem.allOrders) {
             if (o.id == id) {
 
-                // Refactored: Enum comparison
                 if (o.status == OrderStatus.DELIVERED) {
                     System.out.println("Cannot cancel delivered order!");
                     return;
                 }
 
-                o.status = OrderStatus.CANCELLED; // Refactored: Enum assignment
+                o.status = OrderStatus.CANCELLED; 
                 ERPSystem.totalRevenue -= o.totalAmount;
 
                 Customer c = findCustomer(o.customerId);
@@ -78,7 +74,6 @@ public class OrderUpdater {
         int id = ERPSystem.scanner.nextInt();
         ERPSystem.scanner.nextLine();
 
-        // Refactored: Removed unsafe cast
         for (Order o : (ArrayList<Order>)ERPSystem.allOrders) {
             if (o.id == id) {
                 System.out.println("Order Total: $" + o.totalAmount);
@@ -98,7 +93,6 @@ public class OrderUpdater {
     }
 
     private Customer findCustomer(int id) {
-        // Refactored: Removed unsafe cast
         for (Customer c : (ArrayList<Customer>)ERPSystem.allCustomers) {
             if (c.customer_id == id) return c;
         }

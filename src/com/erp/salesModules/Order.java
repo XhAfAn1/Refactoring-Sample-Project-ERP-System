@@ -7,7 +7,7 @@ public class Order {
     public int id;
     public int customerId;
     public Date orderDate;
-    public OrderStatus status; // Refactored: String -> Enum
+    public OrderStatus status; 
     public ArrayList items;
     public double totalAmount;
     public double discount;
@@ -19,7 +19,7 @@ public class Order {
 
     public Order() {
         orderDate = new Date();
-        status = OrderStatus.PENDING; // Refactored
+        status = OrderStatus.PENDING; 
         items = new ArrayList();
         discount = 0;
         tax = 0;
