@@ -33,8 +33,8 @@ public class Order {
     public void calculateTotal() {
         double subtotal = 0;
         for(int i = 0; i < items.size(); i++) {
-            OrderItem item = (OrderItem)items.get(i);
-            subtotal += item.price * item.quantity;
+            OrderItem item = (OrderItem) items.get(i);
+            subtotal += item.getTotal();
         }
         totalAmount = subtotal - discount + tax + shippingCost;
     }
@@ -51,14 +51,12 @@ public class Order {
     public void printDetailed() {
         print();
         System.out.println("\n=== Order Items ===");
-        for(int i = 0; i < items.size(); i++) {
-            OrderItem item = (OrderItem)items.get(i);
-            System.out.println("Product ID: " + item.productId);
-            System.out.println("Quantity: " + item.quantity);
-            System.out.println("Price: $" + item.price);
-            System.out.println("Subtotal: $" + (item.price * item.quantity));
-            System.out.println("---");
+
+        for (int i = 0; i < items.size(); i++) {
+            OrderItem item = (OrderItem) items.get(i);
+            item.printDetails();   
         }
+
         System.out.println("Discount: $" + discount);
         System.out.println("Tax: $" + tax);
         System.out.println("Shipping: $" + shippingCost);

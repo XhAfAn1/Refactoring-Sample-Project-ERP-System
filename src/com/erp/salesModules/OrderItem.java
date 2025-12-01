@@ -18,4 +18,13 @@ public class OrderItem {
     public double getTotal() {
         return (price * quantity) - discount;
     }
+    
+    public void printDetails() {
+        System.out.println("Product ID: " + productId);
+        System.out.println("Product Name: " + productName);
+        System.out.println("Quantity: " + quantity);
+        System.out.println("Price: $" + price);
+        System.out.println("Subtotal: $" + getTotal());
+        System.out.println("---");
+    }
 }

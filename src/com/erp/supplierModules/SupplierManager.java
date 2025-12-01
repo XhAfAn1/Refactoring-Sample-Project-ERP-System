@@ -86,13 +86,19 @@ public class SupplierManager {
         for(int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
             Supplier s = (Supplier)ERPSystem.allSuppliers.get(i);
             if(s.supplier_id == id) {
+
                 System.out.print("Enter new phone (current: " + s.supplier_phone + "): ");
-                s.supplier_phone = ERPSystem.scanner.nextLine();
+                String newPhone = ERPSystem.scanner.nextLine();
+
                 System.out.print("Enter new email (current: " + s.supplier_email + "): ");
-                s.supplier_email = ERPSystem.scanner.nextLine();
+                String newEmail = ERPSystem.scanner.nextLine();
+
                 System.out.print("Enter new rating (current: " + s.supplier_rating + "): ");
-                s.supplier_rating = ERPSystem.scanner.nextDouble();
+                double newRating = ERPSystem.scanner.nextDouble();
                 ERPSystem.scanner.nextLine();
+
+                s.updateContactInfo(newPhone, newEmail, newRating);
+
                 System.out.println("Supplier updated!");
                 return;
             }

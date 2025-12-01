@@ -23,6 +23,14 @@ public class Supplier {
         supplier_rating = 5.0;
     }
 
+    // ★ New method to remove feature envy
+    public void updateContactInfo(String phone, String email, double rating) {
+        this.supplier_phone = phone;
+        this.supplier_email = email;
+        this.supplier_rating = rating;
+    }
+
+    // ★ Moved printing logic here
     public void print() {
         System.out.println("Supplier ID: " + supplier_id);
         System.out.println("Name: " + supplier_name);
