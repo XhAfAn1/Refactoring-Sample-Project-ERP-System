@@ -3,15 +3,12 @@ package com.erp.productModules;
 import com.erp.coreModules.ERPSystem;
 import java.util.*;
 
-public class InventoryService implements ProductAdmin, StockOperator, InventoryReporter {
-
-    @Override
+public class InventoryService {
     public void addProduct(Product p, int initialStock) {
         ERPSystem.allProducts.add(p);
         ERPSystem.inventory.put(p.product_id, initialStock);
     }
 
-    @Override
     public boolean updateProduct(int id, double newPrice, double newCost) {
         for (Object obj : ERPSystem.allProducts) {
             Product p = (Product) obj;
@@ -24,7 +21,6 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
         return false;
     }
 
-    @Override
     public boolean deleteProduct(int id) {
         Iterator it = ERPSystem.allProducts.iterator();
         while (it.hasNext()) {
@@ -38,7 +34,6 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
         return false;
     }
 
-    @Override
     public boolean updateStock(int id, int quantity, boolean isAdding) {
         if (!ERPSystem.inventory.containsKey(id)) return false;
         
@@ -55,7 +50,6 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
         return false;
     }
 
-    @Override
     public int checkStock(int id) {
         if (ERPSystem.inventory.containsKey(id)) {
             return (Integer) ERPSystem.inventory.get(id);
@@ -63,7 +57,6 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
         return -1;
     }
 
-    @Override
     public List<Product> getAllProducts() {
         List<Product> list = new ArrayList<>();
         for (Object obj : ERPSystem.allProducts) {
@@ -72,12 +65,10 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
         return list;
     }
     
-    @Override
     public Map<Integer, Integer> getStockMap() {
          return new HashMap(ERPSystem.inventory);
     }
 
-    @Override
     public List<Product> getLowStockProducts() {
         List<Product> lowStock = new ArrayList<>();
         for (Object obj : ERPSystem.allProducts) {
@@ -90,7 +81,6 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
         return lowStock;
     }
 
-    @Override
     public Map<String, List<Product>> getProductsByCategory() {
         Map<String, List<Product>> map = new HashMap<>();
         for (Object obj : ERPSystem.allProducts) {
