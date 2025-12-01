@@ -96,68 +96,49 @@ public class FinanceManager {
         }
     }
 
-    public void incomeStatement() {
-        double totalIncome = 0;
-        HashMap incomeCategories = new HashMap();
+    private void generateCategoryReport(String title, String type, String totalLabel) {
+        double total = 0;
+        HashMap<String, Double> categories = new HashMap<>();
 
-        for(int i = 0; i < transactions.size(); i++) {
-            Transaction t = (Transaction)transactions.get(i);
-            if(t.type.equals("INCOME")) {
-                totalIncome += t.amount;
+        for(Object obj : transactions) {
+            Transaction t = (Transaction)obj;
+            if(t.type.equals(type)) {
+                total += t.amount;
 
-                if(incomeCategories.containsKey(t.category)) {
-                    double amt = (Double)incomeCategories.get(t.category);
-                    incomeCategories.put(t.category, amt + t.amount);
+                if(categories.containsKey(t.category)) {
+                    double amt = categories.get(t.category);
+                    categories.put(t.category, amt + t.amount);
                 } else {
-                    incomeCategories.put(t.category, t.amount);
+                    categories.put(t.category, t.amount);
                 }
             }
         }
 
-        System.out.println("\n=== INCOME STATEMENT ===");
-        System.out.println("\nIncome by Category:");
-        Iterator it = incomeCategories.keySet().iterator();
-        while(it.hasNext()) {
-            String cat = (String)it.next();
-            double amt = (Double)incomeCategories.get(cat);
-            System.out.println(cat + ": $" + amt);
+        System.out.println("\n=== " + title + " ===");
+        System.out.println("\n" + (type.equals("INCOME") ? "Income" : "Expenses") + " by Category:");
+        for(String cat : categories.keySet()) {
+            System.out.println(cat + ": $" + categories.get(cat));
         }
-        System.out.println("\nTotal Income: $" + totalIncome);
+        System.out.println("\n" + totalLabel + ": $" + total);
+    }
+
+    private double calculateTotalMonthlySalaries() {
+        double total = 0;
+        for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
+            FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
+            total += e.monthlySalary;
+        }
+        return total;
+    }
+
+    public void incomeStatement() {
+        generateCategoryReport("INCOME STATEMENT", "INCOME", "Total Income");
     }
 
     public void expenseReport() {
-        double totalExpense = 0;
-        HashMap expenseCategories = new HashMap();
-
-        for(int i = 0; i < transactions.size(); i++) {
-            Transaction t = (Transaction)transactions.get(i);
-            if(t.type.equals("EXPENSE")) {
-                totalExpense += t.amount;
-
-                if(expenseCategories.containsKey(t.category)) {
-                    double amt = (Double)expenseCategories.get(t.category);
-                    expenseCategories.put(t.category, amt + t.amount);
-                } else {
-                    expenseCategories.put(t.category, t.amount);
-                }
-            }
-        }
-
-        System.out.println("\n=== EXPENSE REPORT ===");
-        System.out.println("\nExpenses by Category:");
-        Iterator it = expenseCategories.keySet().iterator();
-        while(it.hasNext()) {
-            String cat = (String)it.next();
-            double amt = (Double)expenseCategories.get(cat);
-            System.out.println(cat + ": $" + amt);
-        }
-        System.out.println("\nTotal Expenses: $" + totalExpense);
-
-        double salaryExpense = 0;
-        for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
-            FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
-            salaryExpense += e.monthlySalary;
-        }
+        generateCategoryReport("EXPENSE REPORT", "EXPENSE", "Total Expenses");
+        
+        double salaryExpense = calculateTotalMonthlySalaries();
         System.out.println("Employee Salaries: $" + salaryExpense);
     }
 
@@ -185,14 +166,10 @@ public class FinanceManager {
         System.out.println("Total Revenue: $" + ERPSystem.totalRevenue);
         System.out.println("Total Expenses: $" + ERPSystem.totalExpenses);
 
-        double salaryExpense = 0;
-        for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
-            FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
-            salaryExpense += e.monthlySalary * 12;
-        }
-        System.out.println("Annual Salary Expense: $" + salaryExpense);
+        double annualSalaryExpense = calculateTotalMonthlySalaries() * 12;
+        System.out.println("Annual Salary Expense: $" + annualSalaryExpense);
 
-        double totalCost = ERPSystem.totalExpenses + salaryExpense;
+        double totalCost = ERPSystem.totalExpenses + annualSalaryExpense;
         double netProfit = ERPSystem.totalRevenue - totalCost;
 
         System.out.println("\nTotal Costs: $" + totalCost);
