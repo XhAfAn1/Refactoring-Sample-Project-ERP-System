@@ -217,8 +217,6 @@ Even with poor design, the system is feature-rich.
 ---
 ---
 
-## ✨ Features
-
 Despite the architectural flaws, the system is functionally rich:
 
 ### 👥 Employee Management
