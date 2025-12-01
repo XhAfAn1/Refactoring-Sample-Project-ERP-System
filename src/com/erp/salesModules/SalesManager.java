@@ -1,6 +1,8 @@
 package com.erp.salesModules;
 
 import com.erp.coreModules.ERPSystem;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SalesManager {
 
@@ -8,6 +10,19 @@ public class SalesManager {
     private final OrderViewer orderViewer = new OrderViewer();
     private final OrderUpdater orderUpdater = new OrderUpdater();
     private final SalesAnalytics salesAnalytics = new SalesAnalytics();
+
+    private final Map<Integer, Runnable> menuActions = new HashMap<>();
+
+    public SalesManager() {
+        menuActions.put(1, orderCreator::createOrder);
+        menuActions.put(2, orderViewer::viewAllOrders);
+        menuActions.put(3, orderViewer::viewOrderDetails);
+        menuActions.put(4, orderUpdater::updateOrderStatus);
+        menuActions.put(5, orderUpdater::cancelOrder);
+        menuActions.put(6, orderUpdater::processPayment);
+        menuActions.put(7, salesAnalytics::salesStatistics);
+        menuActions.put(8, salesAnalytics::topCustomers);
+    }
 
     public void showMenu() {
         while (true) {
@@ -26,16 +41,15 @@ public class SalesManager {
             int choice = ERPSystem.scanner.nextInt();
             ERPSystem.scanner.nextLine();
 
-            switch (choice) {
-                case 1 -> orderCreator.createOrder();
-                case 2 -> orderViewer.viewAllOrders();
-                case 3 -> orderViewer.viewOrderDetails();
-                case 4 -> orderUpdater.updateOrderStatus();
-                case 5 -> orderUpdater.cancelOrder();
-                case 6 -> orderUpdater.processPayment();
-                case 7 -> salesAnalytics.salesStatistics();
-                case 8 -> salesAnalytics.topCustomers();
-                case 9 -> { return; }
+            if (choice == 9) {
+                return;
+            }
+
+            Runnable action = menuActions.get(choice);
+            if (action != null) {
+                action.run();
+            } else {
+                System.out.println("Invalid choice!");
             }
         }
     }
