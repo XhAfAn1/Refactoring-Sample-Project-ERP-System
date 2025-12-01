@@ -6,234 +6,129 @@
 This is a comprehensive ERP (Enterprise Resource Planning) system built with pure Java.  
 It manages various business operations including:
 
-- Employee Management
-- Inventory Management
-- Sales & Orders
-- Customer Management
-- Supplier Management
-- Finance & Accounting
-- Reports & Analytics
+- Employee Management  
+- Inventory Management  
+- Sales & Orders  
+- Customer Management  
+- Supplier Management  
+- Finance & Accounting  
+- Reports & Analytics  
 
 ---
 
-## Intentional Code Smells & Design Violations
-This project has been deliberately written with poor design patterns and code smells for educational purposes in a software design course.
+# 🏭 Refactoring 
 
-### Violations
+![Java](https://img.shields.io/badge/Language-Java-orange)
+![Build](https://img.shields.io/badge/Build-NPM%20%7C%20Javac-blue)
+![Status](https://img.shields.io/badge/Status-Legacy%20Code-red)
 
-1. **God Object Anti-Pattern**
-   - `ERPSystem` class acts as a god object with too many responsibilities
-   - Manager classes are overly large and complex
+## 📖 Overview
 
-2. **Static Abuse**
-   - Excessive use of static variables (`allEmployees`, `allProducts`, etc.)
-   - Global state management through static fields
-   - Static scanner shared across entire application
+**ERP System** is a console-based Enterprise Resource Planning application written in pure Java. It simulates a monolithic legacy codebase containing HR, Supply Chain, Sales, and Financial Accounting functionalities.
 
-3. **Primitive Obsession**
-   - Using raw `ArrayList` and `HashMap` without generics
-   - No custom collection types
-
-4. **Long Methods**
-   - Many methods exceed 50+ lines
-   - Complex nested logic without proper decomposition
-
-5. **Duplicate Code**
-   - Repeated CRUD operations across different managers
-   - Similar validation logic scattered throughout
-   - Repeated menu display patterns
-
-6. **No Abstraction**
-   - No interfaces or abstract classes
-   - Tight coupling between classes
-   - Direct field access (all fields are public)
-
-7. **Poor Encapsulation**
-   - All class fields are public
-   - No getters/setters
-   - No data hiding
-
-8. **Magic Numbers**
-   - Hard-coded values throughout the code
-   - No constants defined
-
-9. **No Design Patterns**
-   - Missing Factory, Strategy, Observer, and Singleton patterns
-
-10. **Poor Error Handling**
-    - Minimal exception handling
-    - No custom exceptions
-    - Silent failures in some cases
-
-11. **Tight Coupling**
-    - Classes directly reference each other
-    - No dependency injection
-    - Hard to test or modify
-
-12. **Single Responsibility Violation**
-    - Manager classes handle UI, business logic, and data access
-    - Classes have multiple reasons to change
-
-13. **Open/Closed Principle Violation**
-    - Code requires modification to extend functionality
-    - No abstraction for extension points
-
-14. **Liskov Substitution Violation**
-    - No inheritance hierarchy to violate (yet another smell)
-
-15. **Interface Segregation Violation**
-    - No interfaces at all
-
-16. **Dependency Inversion Violation**
-    - High-level modules depend on low-level modules
-    - No abstraction layer
+> **⚠️ Warning**  
+> This project intentionally contains **bad design**, **code smells**, and **SOLID violations** to serve as a refactoring practice system.
 
 ---
 
-## Compilation and Execution
+## 🏗️ Project Architecture — *Before Refactoring*
 
-### Method 1 - Using npm scripts
-```bash
-npm run build    # Compiles all Java files
-npm run start    # Compiles and runs the system
-```
+The system uses a **God Class Architecture**, with tight coupling and global static state.
 
-### Method 2 - Manual compilation
-```bash
-javac -d bin src/com/erp/*.java
-java -cp bin com.erp.ERPSystem
-```
-
-### Method 3 - Compile individual files
-```bash
-cd src
-javac com/erp/*.java
-java com.erp.ERPSystem
-```
-
----
-
-## System Requirements
-- Java JDK 8 or higher
-- Terminal or Command Line interface
-
----
-
-## Project Structure
-```
+### 📂 Directory Structure
+```text
 src/com/erp/
-├── ERPSystem.java           - Main entry point with static data
-├── Employee.java            - Employee entity
-├── EmployeeManager.java     - Employee CRUD operations
-├── Product.java             - Product entity
-├── InventoryManager.java    - Inventory operations
-├── Customer.java            - Customer entity
-├── CustomerManager.java     - Customer operations
-├── Order.java               - Order entity
-├── OrderItem.java           - Order line item
-├── SalesManager.java        - Sales and order operations
-├── Supplier.java            - Supplier entity
-├── PurchaseOrder.java       - Purchase order entity
-├── PurchaseOrderItem.java   - PO line item
-├── SupplierManager.java     - Supplier and purchasing
-├── Transaction.java         - Financial transaction
-├── FinanceManager.java      - Finance and accounting
-├── ReportManager.java       - Reports and analytics
-├── SystemSettings.java      - System configuration
-├── DataValidator.java       - Data validation utilities
-├── Calculator.java          - Mathematical operations
-└── Utils.java               - General utilities
-```
+├── coreModules/
+│   ├── ERPSystem.java
+│   ├── SystemSettings.java
+│   └── Utils.java
+├── customerModules/
+│   ├── Customer.java
+│   ├── CustomerManager.java
+│   └── OrderService.java
+├── employeeModules/
+│   ├── Employee.java
+│   ├── FullTimeEmployee.java
+│   ├── PartTimeEmployee.java
+│   └── EmployeeManager.java
+├── financeModules/
+├── productModules/
+├── reportModules/
+├── salesModules/
+└── supplierModules/
 
-**Total Classes:** 22  
-**Total Lines of Code:** ~3000+
+# 🏭 Refactoring 
 
----
+# 🚩 Intentional Code Smells & Anti-Patterns
 
-## Features
-
-### Employee Management
-- Add, view, search, update, delete employees
-- Give raises and bonuses
-- Department reports
-- Salary calculations
-
-### Inventory Management
-- Add, view, update, delete products
-- Stock management (add/remove)
-- Low stock alerts
-- Product categories
-- Profit margin calculations
-
-### Sales and Orders
-- Create orders with multiple items
-- Track order status (Pending, Confirmed, Shipped, Delivered, Cancelled)
-- Process payments
-- Sales statistics
-- Top customers report
-
-### Customer Management
-- Add, view, search, update, delete customers
-- Credit limit management
-- Customer order history
-- Balance reports
-
-### Supplier Management
-- Add, view, update, delete suppliers
-- Create purchase orders
-- Receive purchase orders (updates inventory)
-- Supplier performance tracking
-
-### Finance and Accounting
-- Add income/expense transactions
-- Income statement
-- Expense report
-- Cash flow analysis
-- Profit and Loss statement
-- Accounts Receivable and Payable
-
-### Reports and Analytics
-- Sales reports
-- Inventory reports
-- Employee reports
-- Customer analysis
-- Product performance
-- Financial summary
-- Monthly consolidated report
-- Data export (CSV format)
-
-### System Settings
-- Change company name
-- View system information
-- Database statistics
-- Clear all data
-- Initialize sample data
-- System backup
-- User management
-- Tax settings
+The following issues are purposely added to the system so you can practice detecting and refactoring them.
 
 ---
 
-## Usage Notes
-- All data is stored in memory (no database)
-- Sample data is initialized on startup
-- Use menu numbers to navigate
-- Input validation is minimal
-- No authentication or authorization implemented
+## 1. **God Object Anti-Pattern**
+- `ERPSystem` stores all application data in static lists.  
+- Contains the main UI loop + logic + state.  
+- Manager classes also mix unrelated responsibilities.
 
 ---
 
-## Assignment Purpose
-This codebase is intentionally poor and should be refactored to apply:
-
-- SOLID Principles
-- Design Patterns (Factory, Strategy, Observer, Singleton, etc.)
-- Proper encapsulation and abstraction
-- Separation of concerns
-- Dependency injection
-- Exception handling
-- Code organization and modularization
+## 2. **Static Abuse & Global Mutable State**
+- Heavy use of public static lists (`Employees`, `Products`, `Orders`).  
+- Shared `Scanner` instance across the entire application.  
+- Impossible to test cleanly due to global state.
 
 ---
 
-## Good Luck With Your Refactoring
+## 3. **Primitive Obsession**
+Using primitives like `String`, `double`, `int` where Value Objects or Enums should be used.
+
+**Examples:**
+- Currency as `double`
+- Phone numbers as `String`
+- Status as `"PENDING"` / `"SHIPPED"` instead of Enums
+
+---
+
+## 4. **Long Methods (Spaghetti Code)**
+- UI logic, business calculations, and printing inside one giant method.  
+- 50+ line methods with deeply nested loops and conditions.
+
+---
+
+## 5. **Duplicate Code (DRY Violation)**
+- Repeated CRUD code in each manager class.  
+- Repeated input validation logic.  
+- Copy-paste blocks between modules.
+
+---
+
+## 6. **No Abstraction**
+- No interfaces.  
+- No separation of layers:  
+  - UI  
+  - Business logic  
+  - Data  
+- Everything tightly coupled.
+
+---
+
+## 7. **Poor Encapsulation**
+- Entity class fields are all `public`.  
+- No getters or setters.  
+- No validation for updates.
+
+---
+
+## 8. **Magic Numbers & Hard-Coded Strings**
+**Examples:**
+- `"PENDING"`, `"DELIVERED"`  
+- `"Electronics"`, `"Clothing"`  
+- `0.15` for tax  
+- Hard-coded menu options  
+- No constants or enums used.
+
+---
+
+## 9. **Missing Design Patterns**
+The code ignores obvious opportunities to apply pat
+
