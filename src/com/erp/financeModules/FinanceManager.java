@@ -3,12 +3,15 @@ package com.erp.financeModules;
 import com.erp.coreModules.ERPSystem;
 import com.erp.customerModules.Customer;
 import com.erp.employeeModules.FullTimeEmployee;
+import com.erp.enums.PaymentStatus;
+import com.erp.enums.TransactionType;
 import com.erp.supplierModules.PurchaseOrder;
 import com.erp.supplierModules.SupplierManager;
 import java.util.*;
 
 public class FinanceManager {
-    public ArrayList transactions = new ArrayList();
+    // Refactored: Use Generic List instead of raw ArrayList
+    public List<Transaction> transactions = new ArrayList<>();
 
     public void showMenu() {
         while(true) {
@@ -27,25 +30,15 @@ public class FinanceManager {
             int choice = ERPSystem.scanner.nextInt();
             ERPSystem.scanner.nextLine();
 
-            if(choice == 1) {
-                addTransaction();
-            } else if(choice == 2) {
-                viewAll();
-            } else if(choice == 3) {
-                incomeStatement();
-            } else if(choice == 4) {
-                expenseReport();
-            } else if(choice == 5) {
-                cashFlow();
-            } else if(choice == 6) {
-                profitLoss();
-            } else if(choice == 7) {
-                accountsReceivable();
-            } else if(choice == 8) {
-                accountsPayable();
-            } else if(choice == 9) {
-                break;
-            }
+            if(choice == 1) addTransaction();
+            else if(choice == 2) viewAll();
+            else if(choice == 3) incomeStatement();
+            else if(choice == 4) expenseReport();
+            else if(choice == 5) cashFlow();
+            else if(choice == 6) profitLoss();
+            else if(choice == 7) accountsReceivable();
+            else if(choice == 8) accountsPayable();
+            else if(choice == 9) break;
         }
     }
 
@@ -57,13 +50,14 @@ public class FinanceManager {
         System.out.println("1. Income");
         System.out.println("2. Expense");
         System.out.print("Enter choice: ");
-        int type = ERPSystem.scanner.nextInt();
+        int typeChoice = ERPSystem.scanner.nextInt();
         ERPSystem.scanner.nextLine();
 
-        if(type == 1) {
-            t.type = "INCOME";
+        // Refactored: Assign Enum instead of String
+        if(typeChoice == 1) {
+            t.type = TransactionType.INCOME;
         } else {
-            t.type = "EXPENSE";
+            t.type = TransactionType.EXPENSE;
         }
 
         System.out.print("Enter amount: ");
@@ -78,7 +72,8 @@ public class FinanceManager {
 
         transactions.add(t);
 
-        if(t.type.equals("INCOME")) {
+        // Refactored: Enum comparison
+        if(t.type == TransactionType.INCOME) {
             ERPSystem.totalRevenue += t.amount;
         } else {
             ERPSystem.totalExpenses += t.amount;
@@ -90,19 +85,20 @@ public class FinanceManager {
     public void viewAll() {
         System.out.println("\n=== ALL TRANSACTIONS ===");
         for(int i = 0; i < transactions.size(); i++) {
-            Transaction t = (Transaction)transactions.get(i);
+            Transaction t = transactions.get(i);
             System.out.println("\n--- Transaction " + (i+1) + " ---");
             t.print();
         }
     }
 
-    private void generateCategoryReport(String title, String type, String totalLabel) {
+    // Refactored: Helper method using Enums to fix Duplicate Code
+    private void generateCategoryReport(String title, TransactionType type, String totalLabel) {
         double total = 0;
         HashMap<String, Double> categories = new HashMap<>();
 
-        for(Object obj : transactions) {
-            Transaction t = (Transaction)obj;
-            if(t.type.equals(type)) {
+        for(Transaction t : transactions) {
+            // Refactored: Enum equality check
+            if(t.type == type) {
                 total += t.amount;
 
                 if(categories.containsKey(t.category)) {
@@ -115,15 +111,18 @@ public class FinanceManager {
         }
 
         System.out.println("\n=== " + title + " ===");
-        System.out.println("\n" + (type.equals("INCOME") ? "Income" : "Expenses") + " by Category:");
+        System.out.println("\n" + (type == TransactionType.INCOME ? "Income" : "Expenses") + " by Category:");
         for(String cat : categories.keySet()) {
             System.out.println(cat + ": $" + categories.get(cat));
         }
         System.out.println("\n" + totalLabel + ": $" + total);
     }
 
+    // Refactored: Extracted Logic to fix Duplicate Code
     private double calculateTotalMonthlySalaries() {
         double total = 0;
+        // Note: Casting to FullTimeEmployee is a temporary limitation (Liskov substitution smell)
+        // kept here as per scope, but ideally Employee should have abstract getSalary()
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
             total += e.monthlySalary;
@@ -132,11 +131,11 @@ public class FinanceManager {
     }
 
     public void incomeStatement() {
-        generateCategoryReport("INCOME STATEMENT", "INCOME", "Total Income");
+        generateCategoryReport("INCOME STATEMENT", TransactionType.INCOME, "Total Income");
     }
 
     public void expenseReport() {
-        generateCategoryReport("EXPENSE REPORT", "EXPENSE", "Total Expenses");
+        generateCategoryReport("EXPENSE REPORT", TransactionType.EXPENSE, "Total Expenses");
         
         double salaryExpense = calculateTotalMonthlySalaries();
         System.out.println("Employee Salaries: $" + salaryExpense);
@@ -146,9 +145,9 @@ public class FinanceManager {
         double totalIncome = 0;
         double totalExpense = 0;
 
-        for(int i = 0; i < transactions.size(); i++) {
-            Transaction t = (Transaction)transactions.get(i);
-            if(t.type.equals("INCOME")) {
+        for(Transaction t : transactions) {
+            // Refactored: Enum comparison
+            if(t.type == TransactionType.INCOME) {
                 totalIncome += t.amount;
             } else {
                 totalExpense += t.amount;
@@ -185,8 +184,8 @@ public class FinanceManager {
         System.out.println("\n=== ACCOUNTS RECEIVABLE ===");
         double totalReceivable = 0;
 
-        for(int i = 0; i < ERPSystem.allCustomers.size(); i++) {
-            Customer c = (Customer)ERPSystem.allCustomers.get(i);
+        // Refactored loop using Generic List from ERPSystem
+        for(Customer c : (ArrayList<Customer>)ERPSystem.allCustomers) {
             if(c.customer_currentBalance > 0) {
                 System.out.println("\nCustomer: " + c.customer_name);
                 System.out.println("Outstanding: $" + c.customer_currentBalance);
@@ -202,9 +201,11 @@ public class FinanceManager {
         double totalPayable = 0;
 
         SupplierManager sm = new SupplierManager();
-        for(int i = 0; i < sm.purchaseOrders.size(); i++) {
-            PurchaseOrder po = (PurchaseOrder)sm.purchaseOrders.get(i);
-            if(po.paymentStatus.equals("UNPAID")) {
+        // Refactored to use Generic List if SupplierManager was updated, or cast safely
+        for(Object obj : sm.purchaseOrders) {
+            PurchaseOrder po = (PurchaseOrder)obj;
+            // Refactored: Enum comparison
+            if(po.paymentStatus == PaymentStatus.UNPAID) {
                 System.out.println("\nPO ID: " + po.id);
                 System.out.println("Supplier ID: " + po.supplierId);
                 System.out.println("Amount: $" + po.totalAmount);

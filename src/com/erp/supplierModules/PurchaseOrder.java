@@ -1,5 +1,6 @@
 package com.erp.supplierModules;
 
+import com.erp.enums.PaymentStatus;
 import java.util.*;
 
 public class PurchaseOrder {
@@ -7,17 +8,17 @@ public class PurchaseOrder {
     public int supplierId;
     public Date orderDate;
     public Date expectedDelivery;
-    public String status;
+    public String status; // Kept as String (PENDING/RECEIVED) as it doesn't match OrderStatus perfecty
     public ArrayList items;
     public double totalAmount;
-    public String paymentStatus;
+    public PaymentStatus paymentStatus; // Refactored: String -> Enum
     public Date deliveredDate;
 
     public PurchaseOrder() {
         orderDate = new Date();
         status = "PENDING";
         items = new ArrayList();
-        paymentStatus = "UNPAID";
+        paymentStatus = PaymentStatus.UNPAID; // Refactored
     }
 
     public void addItem(PurchaseOrderItem item) {

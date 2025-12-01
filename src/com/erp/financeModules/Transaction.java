@@ -1,10 +1,11 @@
 package com.erp.financeModules;
 
+import com.erp.enums.TransactionType;
 import java.util.*;
 
 public class Transaction {
     public int id;
-    public String type;
+    public TransactionType type; // Refactored: String -> Enum
     public double amount;
     public Date date;
     public String description;

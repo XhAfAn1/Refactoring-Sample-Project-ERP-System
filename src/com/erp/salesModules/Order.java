@@ -1,12 +1,13 @@
 package com.erp.salesModules;
 
+import com.erp.enums.OrderStatus;
 import java.util.*;
 
 public class Order {
     public int id;
     public int customerId;
     public Date orderDate;
-    public String status;
+    public OrderStatus status; // Refactored: String -> Enum
     public ArrayList items;
     public double totalAmount;
     public double discount;
@@ -18,7 +19,7 @@ public class Order {
 
     public Order() {
         orderDate = new Date();
-        status = "PENDING";
+        status = OrderStatus.PENDING; // Refactored
         items = new ArrayList();
         discount = 0;
         tax = 0;
@@ -51,12 +52,10 @@ public class Order {
     public void printDetailed() {
         print();
         System.out.println("\n=== Order Items ===");
-
-        for (int i = 0; i < items.size(); i++) {
+        for(int i = 0; i < items.size(); i++) {
             OrderItem item = (OrderItem) items.get(i);
             item.printDetails();   
         }
-
         System.out.println("Discount: $" + discount);
         System.out.println("Tax: $" + tax);
         System.out.println("Shipping: $" + shippingCost);
