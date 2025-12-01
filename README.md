@@ -18,69 +18,203 @@ This project is deliberately engineered with **Code Smells**, **Anti-Patterns**,
 
 ---
 
-## 🚩 Intentional Code Smells & Design Violations
+# 🚩 Intentional Code Smells & Anti-Patterns
 
-The codebase has been deliberately written to exhibit the following poor design patterns. Students are expected to identify and remediate these specific issues:
+The following issues are purposely added to the system so you can practice detecting and refactoring them.
 
-### 1. God Object Anti-Pattern
-* **The `ERPSystem` Class:** Acts as an omniscient controller with too many responsibilities, holding all global data lists (`allEmployees`, `allProducts`, etc.) and the main application loop.
-* **Bloated Managers:** Classes like `EmployeeManager` and `FinanceManager` are overly large, handling unrelated tasks like data persistence and UI rendering.
+---
 
-### 2. Static Abuse & Global State
-* **Global Mutable State:** Extensive use of `public static` variables makes the application fragile and difficult to test concurrently.
-* **Shared Resources:** A static `Scanner` object is shared across the entire application, leading to potential resource management issues.
+## 1. **God Object Anti-Pattern**
+- `ERPSystem` stores all application data in static lists.  
+- Contains the main UI loop + logic + state.  
+- Manager classes also mix unrelated responsibilities.
 
-### 3. Primitive Obsession
-* **Raw Collections:** Usage of `ArrayList` and `HashMap` without type parameters (Generics), leading to frequent and unsafe casting (e.g., `(Employee)list.get(i)`).
-* **Lack of Domain Types:** Concepts like Currency, Email, or Phone Numbers are stored as primitive Strings or Doubles rather than rich value objects.
+---
 
-### 4. Long Methods
-* **Spaghetti Code:** Many methods exceed 50+ lines of code with deep nesting (loops inside if-statements inside loops).
-* **Complex Logic:** Business logic is interwoven with UI printing logic, making it hard to read and maintain.
+## 2. **Static Abuse & Global Mutable State**
+- Heavy use of public static lists (`Employees`, `Products`, `Orders`).  
+- Shared `Scanner` instance across the entire application.  
+- Impossible to test cleanly due to global state.
 
-### 5. Duplicate Code (DRY Violation)
-* **Copy-Paste Programming:** CRUD operations (Create, Read, Update, Delete) are repeated across different manager classes with only minor variable name changes.
-* **Validation:** Input validation logic is scattered throughout the code rather than centralized.
+---
 
-### 6. No Abstraction
-* **Concrete Dependency:** High-level modules depend directly on low-level implementation details.
-* **Missing Interfaces:** There is a distinct lack of interfaces or abstract classes to define contracts between modules.
+## 3. **Primitive Obsession**
+Using primitives like `String`, `double`, `int` where Value Objects or Enums should be used.
 
-### 7. Poor Encapsulation
-* **Public Fields:** Almost all class fields in entities like `Employee` and `Product` are `public`, allowing external classes to modify state without validation.
-* **No Accessors:** Lack of Getters and Setters prevents the implementation of validation rules during state changes.
+**Examples:**
+- Currency as `double`
+- Phone numbers as `String`
+- Status as `"PENDING"` / `"SHIPPED"` instead of Enums
 
-### 8. Magic Numbers & Strings
-* **Hard-Coded Values:** Strings like "PENDING" or "Electronics" and numbers for tax rates or array indices are hard-coded throughout the logic instead of using Constants or Enums.
+---
 
-### 9. No Design Patterns
-* **Missing Patterns:** Opportunities for standard patterns are ignored:
-    * *Factory* for creating Employee types.
-    * *Strategy* for varying tax or salary calculations.
-    * *Observer* for inventory alerts.
+## 4. **Long Methods (Spaghetti Code)**
+- UI logic, business calculations, and printing inside one giant method.  
+- 50+ line methods with deeply nested loops and conditions.
 
-### 10. Poor Error Handling
-* **Silent Failures:** Exceptions are often caught and ignored, or not caught at all, leading to application crashes on invalid input.
-* **No Custom Exceptions:** The system relies on generic runtime exceptions.
+---
 
-### 11. Tight Coupling
-* **Direct Instantiation:** Classes create their dependencies using `new ClassName()`, making it impossible to inject mock objects for testing.
+## 5. **Duplicate Code (DRY Violation)**
+- Repeated CRUD code in each manager class.  
+- Repeated input validation logic.  
+- Copy-paste blocks between modules.
 
-### 12. Single Responsibility Violation (SRP)
-* **Mixed Concerns:** Manager classes handle User Interface (Console I/O), Business Logic (Calculations), and Data Access (List manipulation) all in one file.
+---
 
-### 13. Open/Closed Principle Violation
-* **Rigid Design:** Adding a new feature (e.g., a new Employee type or Report) requires modifying existing, tested code rather than extending it.
+## 6. **No Abstraction**
+- No interfaces.  
+- No separation of layers:  
+  - UI  
+  - Business logic  
+  - Data  
+- Everything tightly coupled.
 
-### 14. Liskov Substitution Violation
-* **Inheritance Misuse:** (Where inheritance exists) Subclasses may not be truly substitutable for their parents, or inheritance is used purely for code reuse rather than "is-a" relationships.
+---
 
-### 15. Interface Segregation Violation
-* **Lack of Interfaces:** Since interfaces are barely used, clients are forced to depend on entire concrete classes even if they only use a fraction of the functionality.
+## 7. **Poor Encapsulation**
+- Entity class fields are all `public`.  
+- No getters or setters.  
+- No validation for updates.
 
-### 16. Dependency Inversion Violation
-* **High-Level Coupling:** The `ERPSystem` (High Level) directly manipulates `ArrayLists` (Low Level) instead of depending on a Repository abstraction.
+---
 
+## 8. **Magic Numbers & Hard-Coded Strings**
+**Examples:**
+- `"PENDING"`, `"DELIVERED"`  
+- `"Electronics"`, `"Clothing"`  
+- `0.15` for tax  
+- Hard-coded menu options  
+- No constants or enums used.
+
+---
+
+## 9. **Missing Design Patterns**
+The code ignores obvious opportunities to apply patterns:
+
+| Pattern   | Should Be Used For |
+|-----------|---------------------|
+| Factory   | Employee creation, product creation |
+| Strategy  | Tax calculation, salary calculation |
+| Observer  | Stock level change alerts |
+| Builder   | Order / PurchaseOrder creation |
+| Singleton | System settings, logging |
+
+---
+
+## 10. **Poor Error Handling**
+- Exceptions caught and ignored.  
+- No custom exceptions.  
+- Many parts can crash due to invalid input.
+
+---
+
+## 11. **Tight Coupling**
+- Classes instantiate dependencies directly with `new`.  
+- No Dependency Injection.  
+- Hard to test or replace modules.
+
+---
+
+## 12. **Single Responsibility Principle Broken**
+Manager classes handle:
+- User input  
+- Data validation  
+- Business logic  
+- Console printing  
+- Data storage  
+All in one place.
+
+---
+
+## 13. **Open/Closed Principle Violated**
+- Adding a new type of employee or report requires modifying multiple existing classes.  
+- No extensibility.
+
+---
+
+## 14. **Liskov Substitution Violations**
+- Some subclasses don’t behave like their parent type.  
+- Inheritance used for code-sharing instead of modeling real relationships.
+
+---
+
+## 15. **Interface Segregation Violations**
+- No interfaces at all.  
+- Classes depend on full concrete implementations.
+
+---
+
+## 16. **Dependency Inversion Violations**
+- High-level modules depend directly on `ArrayList` and concrete classes.  
+- No repository or service abstraction.
+
+---
+
+# ✨ Functional Features
+
+Even with poor design, the system is feature-rich.
+
+---
+
+## 👥 Employee Management
+- Add, view, update, search, delete employees  
+- Full-time & part-time payroll  
+- Department filtering  
+- Bonuses and raises  
+
+---
+
+## 📦 Inventory & Products
+- Add/update/delete products  
+- Adjust stock  
+- Low-stock alerts  
+- Product categories  
+- Inventory value calculation  
+
+---
+
+## 🛒 Sales & Orders
+- Multi-item orders  
+- Order status lifecycle  
+- Tax + discount + shipping logic  
+- Top customers report  
+
+---
+
+## 🚚 Supplier & Purchasing
+- Supplier profiles  
+- Purchase orders  
+- Receiving goods → updates inventory  
+- Supplier performance tracking  
+
+---
+
+## 💰 Finance & Accounting
+- Income & expense records  
+- Income statement  
+- Expense report  
+- Cash flow analysis  
+- Accounts payable & receivable  
+
+---
+
+## 📊 Reports & Analytics
+- Sales reports  
+- Inventory summary  
+- Employee reports  
+- Monthly summary  
+- CSV export (simulated)  
+
+---
+
+## ⚙️ System Settings
+- Change company name  
+- Tax percentage settings  
+- Sample data initialization  
+- Backup simulation  
+- System usage statistics  
+
+---
 ---
 
 ## ✨ Features
@@ -122,13 +256,37 @@ Despite the architectural flaws, the system is functionally rich:
 ---
 
 
+# 🏗️ Full Project Structure (Simplified)
+
+```plaintext
+src/com/erp/
+├── ERPSystem.java
+├── Employee.java
+├── EmployeeManager.java
+├── Product.java
+├── InventoryManager.java
+├── Customer.java
+├── CustomerManager.java
+├── Order.java
+├── OrderItem.java
+├── SalesManager.java
+├── Supplier.java
+├── PurchaseOrder.java
+├── PurchaseOrderItem.java
+├── SupplierManager.java
+├── Transaction.java
+├── FinanceManager.java
+├── ReportManager.java
+├── SystemSettings.java
+├── DataValidator.java
+├── Calculator.java
+└── Utils.java
 
 
-## 🏗️ Project Structure
 
 The project is organized into functional modules (though they are tightly coupled):
 
-```text
+
 src/com/erp/
 ├── coreModules/          # System Entry Point & Global Config
 │   ├── ERPSystem.java    # Main Class (God Object)
