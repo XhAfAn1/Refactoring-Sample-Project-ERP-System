@@ -27,7 +27,6 @@ public class InventoryConsoleUI {
             int choice = ERPSystem.scanner.nextInt();
             ERPSystem.scanner.nextLine();
 
-            // Switch syntax (Java 14+) or use if-else if you are on older Java
             if (choice == 1) addProductUI();
             else if (choice == 2) viewAllUI();
             else if (choice == 3) updateStockUI();
@@ -85,7 +84,6 @@ public class InventoryConsoleUI {
         int stock = service.checkStock(id);
         if(stock != -1) {
             System.out.println("Current Stock: " + stock);
-            // We can check reorder level here via helper or simple logic
         } else {
             System.out.println("Product not found!");
         }

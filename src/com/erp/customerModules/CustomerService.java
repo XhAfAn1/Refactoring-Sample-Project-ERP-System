@@ -2,12 +2,9 @@ package com.erp.customerModules;
 
 import java.util.List;
 
-// THE HIGH-LEVEL MODULE (Depends on Abstraction)
 public class CustomerService {
-    // CHANGE 1: Use the Interface here
     private final ICustomerRepository repo; 
 
-    // CHANGE 2: Accept the Interface in constructor
     public CustomerService(ICustomerRepository repo) {
         this.repo = repo;
     }

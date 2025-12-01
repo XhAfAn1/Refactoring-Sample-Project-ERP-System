@@ -35,14 +35,13 @@ public class SystemSettings {
             System.out.println((commands.size() + 1) + ". Back");
             System.out.print("Enter choice: ");
 
-            // Check if ERPSystem.scanner is initialized before using
             if (ERPSystem.scanner == null) {
                 System.out.println("Error: System scanner not initialized.");
                 return;
             }
 
             int choice = ERPSystem.scanner.nextInt();
-            ERPSystem.scanner.nextLine(); // Consume newline
+            ERPSystem.scanner.nextLine();
 
             if (choice == commands.size() + 1) break;
             

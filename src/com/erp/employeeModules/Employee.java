@@ -3,7 +3,6 @@ package com.erp.employeeModules;
 import java.util.*;
 
 public abstract class Employee {
-    // Common fields for ALL employees
     public int id;
     public String name;
     public String department;
@@ -21,7 +20,6 @@ public abstract class Employee {
         isActive = true;
     }
 
-    // Common methods with implementation
     public void print() {
         System.out.println("ID: " + id);
         System.out.println("Name: " + name);
@@ -33,13 +31,11 @@ public abstract class Employee {
         System.out.println("Active: " + isActive);
     }
 
-    // Abstract methods - subclasses MUST implement
     public abstract double calculateSalary();
     public abstract double calculateAnnualSalary();
     public abstract int getVacationDays();
     public abstract void giveRaise(double percentage);
 
-    // Common getters/setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     

@@ -5,7 +5,6 @@ import java.util.*;
 
 public class InventoryService implements ProductAdmin, StockOperator, InventoryReporter {
 
-    // --- ProductAdmin Implementation ---
     @Override
     public void addProduct(Product p, int initialStock) {
         ERPSystem.allProducts.add(p);
@@ -39,7 +38,6 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
         return false;
     }
 
-    // --- StockOperator Implementation ---
     @Override
     public boolean updateStock(int id, int quantity, boolean isAdding) {
         if (!ERPSystem.inventory.containsKey(id)) return false;
@@ -62,10 +60,9 @@ public class InventoryService implements ProductAdmin, StockOperator, InventoryR
         if (ERPSystem.inventory.containsKey(id)) {
             return (Integer) ERPSystem.inventory.get(id);
         }
-        return -1; // Not found code
+        return -1;
     }
 
-    // --- InventoryReporter Implementation ---
     @Override
     public List<Product> getAllProducts() {
         List<Product> list = new ArrayList<>();

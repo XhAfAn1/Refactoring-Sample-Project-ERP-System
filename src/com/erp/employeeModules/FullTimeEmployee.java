@@ -3,7 +3,7 @@ package com.erp.employeeModules;
 public class FullTimeEmployee extends Employee {
     public double monthlySalary;
     public double bonus;
-    public int vacationDays = 15; // Full-time gets 15 days
+    public int vacationDays = 15; 
 
     public FullTimeEmployee() {
         super();
@@ -11,7 +11,7 @@ public class FullTimeEmployee extends Employee {
 
     @Override
     public double calculateSalary() {
-        return monthlySalary; // Fixed monthly salary
+        return monthlySalary; 
     }
 
     @Override
@@ -35,7 +35,6 @@ public class FullTimeEmployee extends Employee {
         System.out.println("Bonus added: $" + amount);
     }
 
-    // FullTimeEmployee specific methods
     public void applyForLeave(int days) {
         if (days <= vacationDays) {
             vacationDays -= days;

@@ -2,7 +2,6 @@ package com.erp.customerModules;
 
 import java.util.*;
 
-// THE DETAILS (Depend on Abstraction)
 public class CustomerRepository implements ICustomerRepository {
     private final List<Customer> customers = new ArrayList<>();
 
