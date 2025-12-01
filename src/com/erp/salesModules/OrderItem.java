@@ -1,5 +1,7 @@
 package com.erp.salesModules;
 
+import com.erp.productModules.Product;
+
 public class OrderItem {
     public int productId;
     public String productName;
@@ -7,12 +9,12 @@ public class OrderItem {
     public double price;
     public double discount;
 
-    public OrderItem(int pid, String pname, int qty, double pr) {
-        productId = pid;
-        productName = pname;
-        quantity = qty;
-        price = pr;
-        discount = 0;
+    public OrderItem(Product product, int qty) {
+        this.productId = product.product_id;
+        this.productName = product.product_name;
+        this.quantity = qty;
+        this.price = product.product_price;
+        this.discount = 0;
     }
 
     public double getTotal() {

@@ -1,10 +1,9 @@
 package com.erp.salesModules;
 
-import java.util.*;
-
 import com.erp.coreModules.ERPSystem;
 import com.erp.customerModules.Customer;
 import com.erp.productModules.Product;
+import java.util.*;
 
 public class SalesManager {
     public void showMenu() {
@@ -101,7 +100,8 @@ public class SalesManager {
                 continue;
             }
 
-            OrderItem item = new OrderItem(prodId, product.product_name, qty, product.product_price);
+            OrderItem item = new OrderItem(product, qty);
+            
             order.addItem(item);
 
             ERPSystem.inventory.put(prodId, stock - qty);
