@@ -46,27 +46,58 @@ public class EmployeeManager {
     }
 
     public void addEmployee() {
-        FullTimeEmployee e = new FullTimeEmployee();
-        System.out.print("Enter ID: ");
-        e.employee_id = ERPSystem.scanner.nextInt();
-        ERPSystem.scanner.nextLine();
-        System.out.print("Enter Name: ");
-        e.employee_name = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Department: ");
-        e.employee_department = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Salary: ");
-        e.monthlySalary = ERPSystem.scanner.nextDouble();
-        ERPSystem.scanner.nextLine();
-        System.out.print("Enter Email: ");
-        e.employee_email = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Phone: ");
-        e.employee_phone = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Position: ");
-        e.employee_position = ERPSystem.scanner.nextLine();
+    System.out.println("Select Employee Type:");
+    System.out.println("1. Full Time");
+    System.out.println("2. Part Time");
+    System.out.print("Enter choice: ");
+    
+    int type = ERPSystem.scanner.nextInt();
+    ERPSystem.scanner.nextLine(); // consume newline
 
-        ERPSystem.allEmployees.add(e);
-        System.out.println("Employee added successfully!");
+    // 1. Use Factory to create the specific object
+    Employee e = EmployeeFactory.createEmployee(type);
+    
+    if (e == null) {
+        System.out.println("Invalid employee type!");
+        return;
     }
+
+    // 2. Collect Common Details (Shared by all Employees)
+    System.out.print("Enter ID: ");
+    e.employee_id = ERPSystem.scanner.nextInt();
+    ERPSystem.scanner.nextLine();
+    
+    System.out.print("Enter Name: ");
+    e.employee_name = ERPSystem.scanner.nextLine();
+    
+    System.out.print("Enter Department: ");
+    e.employee_department = ERPSystem.scanner.nextLine();
+    
+    System.out.print("Enter Email: ");
+    e.employee_email = ERPSystem.scanner.nextLine();
+    
+    System.out.print("Enter Phone: ");
+    e.employee_phone = ERPSystem.scanner.nextLine();
+    
+    System.out.print("Enter Position: ");
+    e.employee_position = ERPSystem.scanner.nextLine();
+
+    // 3. Collect Specific Details based on instance type
+    if (e instanceof FullTimeEmployee) {
+        System.out.print("Enter Monthly Salary: ");
+        ((FullTimeEmployee) e).monthlySalary = ERPSystem.scanner.nextDouble();
+    } else if (e instanceof PartTimeEmployee) {
+        System.out.print("Enter Hourly Rate: ");
+        ((PartTimeEmployee) e).hourlyRate = ERPSystem.scanner.nextDouble();
+        System.out.print("Enter Hours Per Week: ");
+        ((PartTimeEmployee) e).hoursPerWeek = ERPSystem.scanner.nextInt();
+    }
+    ERPSystem.scanner.nextLine(); // consume trailing newline
+
+    // 4. Add to global list
+    ERPSystem.allEmployees.add(e);
+    System.out.println("Employee added successfully!");
+}
 
     public void viewAll() {
         System.out.println("\n=== ALL EMPLOYEES ===");
