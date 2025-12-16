@@ -1,6 +1,7 @@
 package com.erp.salesModules;
 
 import com.erp.coreModules.ERPSystem;
+import com.erp.productModules.InventoryService;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,14 @@ public class SalesManager {
     private final Map<Integer, Runnable> menuActions = new HashMap<>();
 
     public SalesManager() {
+        // --- OBSERVER WIRING ---
+        InventoryService inventoryObserver = new InventoryService();
+        
+        // Connect the observers
+        orderCreator.addObserver(inventoryObserver);
+        orderCreator.addObserver(salesAnalytics);
+        // -----------------------
+
         menuActions.put(1, orderCreator::createOrder);
         menuActions.put(2, orderViewer::viewAllOrders);
         menuActions.put(3, orderViewer::viewOrderDetails);

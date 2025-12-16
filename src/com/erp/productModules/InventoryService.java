@@ -1,9 +1,33 @@
 package com.erp.productModules;
 
 import com.erp.coreModules.ERPSystem;
+import com.erp.salesModules.Order;
+import com.erp.salesModules.OrderItem;
+import com.erp.salesModules.OrderObserver;
 import java.util.*;
 
-public class InventoryService {
+public class InventoryService implements OrderObserver {
+
+    // --- OBSERVER METHOD ---
+    @Override
+    public void onOrderPlaced(Order order) {
+        System.out.println("[Observer] InventoryService: Processing stock deduction...");
+        
+        for (Object itemObj : order.items) {
+            OrderItem item = (OrderItem) itemObj;
+            
+            // Using the getters we added to OrderItem
+            int pid = item.getProductId();
+            int qty = item.getQuantity();
+            String pName = item.getProductName();
+
+            // Deduct stock
+            updateStock(pid, qty, false);
+            System.out.println("   -> Deducted " + qty + " of " + pName);
+        }
+    }
+    // -----------------------
+
     public void addProduct(Product p, int initialStock) {
         ERPSystem.allProducts.add(p);
         ERPSystem.inventory.put(p.product_id, initialStock);

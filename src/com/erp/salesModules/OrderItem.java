@@ -16,7 +16,10 @@ public class OrderItem {
         this.price = product.product_price;
         this.discount = 0;
     }
-
+    public int getProductId() { return productId; }
+    public int getQuantity() { return quantity; }
+    public String getProductName() { return productName; }
+    
     public double getTotal() {
         return (price * quantity) - discount;
     }

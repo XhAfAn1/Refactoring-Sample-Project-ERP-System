@@ -4,11 +4,25 @@ import com.erp.coreModules.ERPSystem;
 import com.erp.customerModules.Customer;
 import com.erp.productModules.Product;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderCreator {
 
-    public void createOrder() {
+    // --- OBSERVER PATTERN START ---
+    private List<OrderObserver> observers = new ArrayList<>();
 
+    public void addObserver(OrderObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers(Order order) {
+        for (OrderObserver observer : observers) {
+            observer.onOrderPlaced(order);
+        }
+    }
+    // --- OBSERVER PATTERN END ---
+
+    public void createOrder() {
         System.out.print("Enter Customer ID: ");
         int custId = ERPSystem.scanner.nextInt();
         ERPSystem.scanner.nextLine();
@@ -44,15 +58,7 @@ public class OrderCreator {
         finalizeOrder(order, customer);
     }
 
-    private Customer findCustomer(int custId) {
-    for (Customer c : (ArrayList<Customer>) ERPSystem.allCustomers) {
-        if (c.customer_id == custId) return c;
-    }
-    return null;
-}
-
     private void addItemsToOrder(Order order) {
-        System.out.println("Add items to order (enter 0 to finish):");
         while (true) {
             System.out.print("Enter Product ID (0 to finish): ");
             int prodId = ERPSystem.scanner.nextInt();
@@ -64,10 +70,11 @@ public class OrderCreator {
                 continue;
             }
 
-            System.out.print("Enter quantity: ");
+            System.out.print("Enter Quantity: ");
             int qty = ERPSystem.scanner.nextInt();
             ERPSystem.scanner.nextLine();
 
+            // Check stock but DO NOT deduct yet
             int stock = (Integer) ERPSystem.inventory.get(prodId);
             if (stock < qty) {
                 System.out.println("Insufficient stock! Available: " + stock);
@@ -77,14 +84,25 @@ public class OrderCreator {
             OrderItem item = new OrderItem(product, qty);
             order.addItem(item);
 
-            ERPSystem.inventory.put(prodId, stock - qty);
+            // ERPSystem.inventory.put(prodId, stock - qty);
+            // Reason: InventoryService (Observer) will deduct it when order is finalized.
+            
             System.out.println("Item added!");
         }
     }
 
     private Product findProduct(int id) {
-        for (Product p : (ArrayList<Product>)ERPSystem.allProducts) {
+        for (Object obj : ERPSystem.allProducts) {
+            Product p = (Product) obj;
             if (p.product_id == id) return p;
+        }
+        return null;
+    }
+    
+    private Customer findCustomer(int id) {
+        for (Object obj : ERPSystem.allCustomers) {
+            Customer c = (Customer) obj;
+            if (c.customer_id == id) return c;
         }
         return null;
     }
@@ -102,9 +120,12 @@ public class OrderCreator {
     private void finalizeOrder(Order order, Customer customer) {
         customer.customer_currentBalance += order.totalAmount;
         ERPSystem.allOrders.add(order);
-        ERPSystem.totalRevenue += order.totalAmount;
+        
+        // --- NOTIFY OBSERVERS ---
+        notifyObservers(order);
+        // ------------------------
 
-        System.out.println("\nOrder created successfully!");
-        order.print();
+        System.out.println("Order created successfully!");
+        System.out.println("Order Total: $" + order.totalAmount);
     }
 }
