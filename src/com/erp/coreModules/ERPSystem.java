@@ -1,6 +1,7 @@
 package com.erp.coreModules;
 
 import com.erp.customerModules.CustomerConsoleUI;
+import com.erp.customerModules.CustomerPortalFacade;
 import com.erp.customerModules.CustomerRepository;
 import com.erp.customerModules.CustomerService;
 import com.erp.customerModules.OrderRepository;
@@ -20,7 +21,6 @@ public class ERPSystem {
     public static double totalExpenses = 0;
     public static Scanner scanner = new Scanner(System.in);
 
-    // REFACTORED: Point static variables to the Singleton instance
     public static ArrayList allEmployees = DatabaseContext.getInstance().allEmployees;
     public static ArrayList allProducts = DatabaseContext.getInstance().allProducts;
     public static ArrayList allOrders = DatabaseContext.getInstance().allOrders;
@@ -52,6 +52,8 @@ public class ERPSystem {
             System.out.println("7. Reports & Analytics");
             System.out.println("8. System Settings");
             System.out.println("9. Exit");
+            // NEW FACADE OPTION
+            System.out.println("10. Customer Portal"); 
             System.out.print("Enter choice: ");
 
             int choice = scanner.nextInt();
@@ -68,7 +70,12 @@ public class ERPSystem {
             else if (choice == 9) {
                 System.out.println("Exiting system...");
                 break;
-            } else {
+            } 
+            // NEW FACADE CASE
+            else if (choice == 10) {
+                new CustomerPortalFacade().showPortal();
+            }
+            else {
                 System.out.println("Invalid choice!");
             }
         }
