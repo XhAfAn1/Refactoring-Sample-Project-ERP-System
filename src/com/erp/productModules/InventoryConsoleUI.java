@@ -41,14 +41,41 @@ public class InventoryConsoleUI {
     }
 
     private void addProductUI() {
-        Product p = new Product();
-        System.out.print("Enter ID: "); p.product_id = ERPSystem.scanner.nextInt(); ERPSystem.scanner.nextLine();
-        System.out.print("Enter Name: "); p.product_name = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Price: "); p.product_price = ERPSystem.scanner.nextDouble(); ERPSystem.scanner.nextLine();
-        System.out.print("Enter Category: "); p.product_category = ERPSystem.scanner.nextLine();
-        System.out.print("Enter Cost: "); p.product_cost = ERPSystem.scanner.nextDouble(); ERPSystem.scanner.nextLine();
-        System.out.print("Enter Initial Stock: "); int stock = ERPSystem.scanner.nextInt(); ERPSystem.scanner.nextLine();
-        System.out.print("Enter Reorder Level: "); p.product_reorderLevel = ERPSystem.scanner.nextInt(); ERPSystem.scanner.nextLine();
+        System.out.print("Enter ID: "); 
+        int id = ERPSystem.scanner.nextInt(); 
+        ERPSystem.scanner.nextLine();
+
+        System.out.print("Enter Name: "); 
+        String name = ERPSystem.scanner.nextLine();
+
+        System.out.print("Enter Price: "); 
+        double price = ERPSystem.scanner.nextDouble(); 
+        ERPSystem.scanner.nextLine();
+
+        System.out.print("Enter Category: "); 
+        String category = ERPSystem.scanner.nextLine();
+
+        System.out.print("Enter Cost: "); 
+        double cost = ERPSystem.scanner.nextDouble(); 
+        ERPSystem.scanner.nextLine();
+
+        System.out.print("Enter Initial Stock: "); 
+        int stock = ERPSystem.scanner.nextInt(); 
+        ERPSystem.scanner.nextLine();
+
+        System.out.print("Enter Reorder Level: "); 
+        int reorderLevel = ERPSystem.scanner.nextInt(); 
+        ERPSystem.scanner.nextLine();
+
+        // --- REFACTORED: USING STATIC INNER BUILDER ---
+        Product p = new Product.Builder()
+                .withId(id)
+                .withName(name)
+                .withPrice(price)
+                .withCategory(category)
+                .withCost(cost)
+                .withReorderLevel(reorderLevel)
+                .build();
 
         service.addProduct(p, stock);
         System.out.println("Product added successfully!");

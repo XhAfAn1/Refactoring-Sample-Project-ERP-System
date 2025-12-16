@@ -52,19 +52,23 @@ public class DatabaseContext {
         e2.employee_email = "jane@company.com";
         allEmployees.add(e2);
 
-        Product p1 = new Product();
-        p1.product_id = 1;
-        p1.product_name = "Laptop";
-        p1.product_price = 1200.0;
-        p1.product_category = "Electronics";
+        Product p1 = new Product.Builder()
+                .withId(1)
+                .withName("Laptop")
+                .withPrice(1200.0)
+                .withCategory("Electronics")
+                .build();
+                
         allProducts.add(p1);
         inventory.put(1, 50);
 
-        Product p2 = new Product();
-        p2.product_id = 2;
-        p2.product_name = "Mouse";
-        p2.product_price = 25.0;
-        p2.product_category = "Electronics";
+        Product p2 = new Product.Builder()
+                .withId(2)
+                .withName("Mouse")
+                .withPrice(25.0)
+                .withCategory("Electronics")
+                .build();
+                
         allProducts.add(p2);
         inventory.put(2, 200);
 
