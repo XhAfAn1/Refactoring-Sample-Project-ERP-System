@@ -287,25 +287,35 @@ This project is deliberately engineered with **Code Smells**, **Anti-Patterns**,
     }
     ```
 
-#### iii. Inappropriate Naming
-* **Commit:** `a807352`
-* **Links:** [View Changes](https://github.com/XhAfAn1/Refactoring-Sample-Project-ERP-System/commit/a8073520c953e1aa11eff6e404b42263b396b441) | [Browse Repo at this Commit](https://github.com/XhAfAn1/Refactoring-Sample-Project-ERP-System/tree/a8073520c953e1aa11eff6e404b42263b396b441)
+#### iii. Inappropriate Naming & Naming Conventions
+* **Commits:** 1. `a807352` (Disambiguation)
+    2. `43192fd` (Standardization)
+* **Links:**  [View Initial Changes](https://github.com/XhAfAn1/Refactoring-Sample-Project-ERP-System/commit/a8073520c953e1aa11eff6e404b42263b396b441) |  [View Final Refactor](https://github.com/XhAfAn1/Refactoring-Sample-Project-ERP-System/commit/43192fdeadd40bc9e71b6a043514110f98b3b789)
 * **Description:**
-    In this commit, we addressed the "Inappropriate Naming" code smell. Previously, multiple classes (`Employee`, `Product`, `Customer`) used identical generic variable names like `id`, `name`, and `department`. This made the code difficult to read and debug, especially when multiple objects were being processed in the same context. We renamed these fields to be entity-specific (e.g., changing `id` to `employee_id` or `product_id`) to clearly indicate which entity the data belongs to.
+    We addressed the "Inappropriate Naming" code smell through a two-step refactoring process to ensure both clarity and standard compliance:
+    
+    1.  **Disambiguation:** Initially, classes (`Employee`, `Product`) used generic variable names like `id` and `name`. This caused confusion when multiple entities were interacting in the same context. We first renamed these to specific names (e.g., `employee_id`).
+    2.  **Convention Standardization:** We later observed that `snake_case` (e.g., `employee_id`) violates Java naming conventions. We performed a second refactoring to convert these fields to **camelCase** (e.g., `employeeId`).
+    
+    The final code is now explicitly named (preventing ambiguity) and adheres to standard Java style guides.
 * **Example:**
     ```java
-    // Before: Ambiguous generic names
+    // 1. Before: Generic & Ambiguous
     public class Employee {
         public int id;
         public String name;
-        public String email;
     }
 
-    // After: Explicit, context-aware names
+    // 2. Intermediate: Specific but snake_case (Commit a807352)
     public class Employee {
         public int employee_id;
         public String employee_name;
-        public String employee_email;
+    }
+
+    // 3. Final: Specific & camelCase (Commit 43192fd)
+    public class Employee {
+        public int employeeId;    // Clear and Standard
+        public String employeeName;
     }
     ```
 
@@ -727,10 +737,94 @@ This project is deliberately engineered with **Code Smells**, **Anti-Patterns**,
     portal.showPortal(); 
     ```
 ---
-### 4. Architectural Design
+## Architectural Design
+
+### 1. Architectural Context Diagram (ACD)
+The **ERP System** acts as the central hub, mediating interactions between various human actors and external systems.
+
+* **Target System:** ERP System (Center Box).
+* **Actors (Human):**
+    * **Administrator:** Manages system settings, users, and logs.
+    * **Employee/Manager:** Uses the system for HR, sales, and inventory tasks.
+    * **Customer:** Interacts via the "Customer Portal" to browse products and place orders.
+    * **Supplier:** (Optional) Represented as an external entity if no portal exists.
+* **Subordinate Systems (Dependencies):**
+    * **Database System:** Stores Employee, Product, and Order data (simulated by `DatabaseContext`).
+    * **File System:** Handles backups and report generation.
+* **Peer Systems (Interactions):**
+    * **Payment Gateway:** Processes payments for orders (implied in Finance Manager).
+    * **Email/Notification Service:** Sends alerts for low stock or order confirmations.
+
+![Architectural Context Diagram](https://github.com/XhAfAn1/Refactoring-Sample-Project-ERP-System/blob/main/Assets/ACD-ERP.png)
+*Figure 1: Architectural Context Diagram* 
+
 ---
-[Image](www.example.com)
+
+### 2. Defining the Archetypes
+We defined specific archetypes to describe the roles of external entities interacting with the system.
+
+1.  **Operator (User Archetype):**
+    * **Represents:** Administrator, HR Manager, Sales Clerk.
+    * **Interaction:** Inputs commands via the Console UI to manage data.
+2.  **Client (Remote Node Archetype):**
+    * **Represents:** Customer Portal User.
+    * **Interaction:** Remotely browses inventory and submits orders.
+3.  **External Resource (Peer Archetype):**
+    * **Represents:** Payment Gateway, External Supplier System.
+    * **Interaction:** Provides services (payment processing) or data (shipping updates) to the ERP.
+4.  **Archive (Storage Archetype):**
+    * **Represents:** The `DatabaseContext` or Backup Files.
+    * **Interaction:** Passive storage that the Controller reads from/writes to.
+
+![System Archetypes](https://github.com/XhAfAn1/Refactoring-Sample-Project-ERP-System/blob/main/Assets/Archetypes.png)
+*Figure 2: Archetypes*
+
 ---
+
+### 3. Refining the Architecture into Components
+[cite_start]To resolve the "God Object" issue, the `ERPSystem` was broken down into logical functional modules based on the package structure[cite: 83, 84].
+
+* [cite_start]**Presentation Components (UI):** [cite: 85]
+    * [cite_start]**Customer PortalFacade:** The interface for customers[cite: 86].
+    * [cite_start]**Console UI:** The menus for Employees/Admins[cite: 87].
+* [cite_start]**Application/Business Components:** [cite: 88]
+    * [cite_start]**HR / Employee Manager:** Handles Employee logic, payroll, and hiring[cite: 89].
+    * [cite_start]**Inventory Manager:** Manages Product data, stock levels, and reordering[cite: 89].
+    * [cite_start]**Sales Manager:** Handles Order creation, processing, and status updates[cite: 90].
+    * [cite_start]**Finance Manager:** Manages Transaction, income, and expense reports[cite: 90].
+    * [cite_start]**Supplier Manager:** Handles Supplier profiles and Purchase Order logic[cite: 91].
+    * [cite_start]**Reporting Engine:** Generates various reports (Sales, Employee, Inventory)[cite: 92].
+* [cite_start]**Infrastructure Components:** [cite: 92]
+    * [cite_start]**System Settings:** Manages backups, logs, and configuration[cite: 93].
+    * [cite_start]**Data Repository:** The `DatabaseContext` or generic Repository classes[cite: 94].
+
+<p align="center">
+  <img src="https://github.com/XhAfAn1/Refactoring-Sample-Project-ERP-System/blob/main/Assets/ArchetypesToCompo.png" width="45%" alt="Archetypes to Components - Diagram 1" />
+  <img src="https://github.com/XhAfAn1/Refactoring-Sample-Project-ERP-System/blob/main/Assets/ArchetypesToCom2.png" width="45%" alt="Archetypes to Components - Diagram 2" />
+</p>
+<p align="center"><em>Figure 3 & 4: Archetypes to Components</em></p>
+
+---
+
+### 4. Proposed System Design: Layered Architecture + MVC
+The final design uses a **Layered Architecture** to fix the "God Object" issue, stacking four horizontal layers.
+
+| Layer | Role | Components | Note |
+| :--- | :--- | :--- | :--- |
+| **1. Presentation Layer (Top)** | Handles user interaction. | `CustomerConsoleUI`, `InventoryConsoleUI`, `Customer Portal Facade`. | Only accepts input and displays output. Calls the Business Layer. |
+| **2. Business Logic Layer (Middle - Top)** | Performs calculations and logic. | `Customer Service`, `Order Service`, `InventoryService`, `FinanceManager`. | Contains rules (e.g., "Apply tax"). Does not know about the UI. |
+| **3. Persistence Layer (Middle - Bottom)** | Abstracts the database. | `Customer Repository`, `OrderRepository`, `DatabaseContext`. | Contains methods like `findById()`, `save()`, `delete()`. |
+| **4. Database Layer (Bottom)** | Actual data storage. | SQL Database / In-Memory Store. | |
+
+**Why this pattern?**
+* **Separation of Concerns:** Stops mixing UI (`System.out.println`) with logic.
+* **Scalability:** Allows swapping the Console UI for a Web UI without changing Business Logic.
+* **Testability:** Enables testing services without console input.
+
+![Layered Architecture Diagram](https://github.com/XhAfAn1/Refactoring-Sample-Project-ERP-System/blob/main/Assets/Architectural%20Diagram.png)
+*Figure 5: Architectural Design Diagram*
+
+
 ##  How to Run the Project
 
 Since this is a console-based Java application, you can run it using any Java IDE (like IntelliJ IDEA, Eclipse, or NetBeans) or via the command line.
@@ -934,6 +1028,12 @@ README.md
 .gitattributes
 
 ```
+##  Contributors  
+
+- [Abrar Khatib Lajim](https://github.com/AbrarBb)  
+- [Md. Saiful Islam](https://github.com/XhAfAn1) 
+- [Umme Muqaddisa](https://github.com/ummeMuqaddisa) 
+
 ---
 
 ##  Technical Limitations
