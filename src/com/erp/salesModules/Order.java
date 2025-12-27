@@ -4,7 +4,7 @@ import com.erp.enums.OrderStatus;
 import java.util.*;
 
 public class Order {
-    public int id;
+    public int orderId;
     public int customerId;
     public Date orderDate;
     public OrderStatus status; 
@@ -41,7 +41,7 @@ public class Order {
     }
 
     public void print() {
-        System.out.println("Order ID: " + id);
+        System.out.println("Order ID: " + orderId);
         System.out.println("Customer ID: " + customerId);
         System.out.println("Order Date: " + orderDate);
         System.out.println("Status: " + status);

@@ -4,7 +4,7 @@ import com.erp.enums.PaymentStatus;
 import java.util.*;
 
 public class PurchaseOrder {
-    public int id;
+    public int purchaseOrderId;
     public int supplierId;
     public Date orderDate;
     public Date expectedDelivery;
@@ -36,7 +36,7 @@ public class PurchaseOrder {
     }
 
     public void print() {
-        System.out.println("PO ID: " + id);
+        System.out.println("PO ID: " + purchaseOrderId);
         System.out.println("Supplier ID: " + supplierId);
         System.out.println("Order Date: " + orderDate);
         System.out.println("Status: " + status);

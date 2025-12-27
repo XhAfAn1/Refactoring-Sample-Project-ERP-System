@@ -1,31 +1,31 @@
 package com.erp.productModules;
 
 public class Product {
-    public int product_id;
-    public String product_name;
-    public double product_price;
-    public String product_category;
-    public String product_description;
-    public double product_cost;
-    public String product_supplier;
-    public int product_reorderLevel;
-    public String product_barcode;
-    public double product_weight;
-    public String product_dimensions;
+    public int productId;
+    public String productName;
+    public double productPrice;
+    public String productCategory;
+    public String productDescription;
+    public double productCost;
+    public String productSupplier;
+    public int productReorderLevel;
+    public String productBarcode;
+    public double productWeight;
+    public String productDimensions;
 
     // 1. Private Constructor: Can only be called by the Builder
     private Product(Builder builder) {
-        this.product_id = builder.product_id;
-        this.product_name = builder.product_name;
-        this.product_price = builder.product_price;
-        this.product_category = builder.product_category;
-        this.product_description = builder.product_description;
-        this.product_cost = builder.product_cost;
-        this.product_supplier = builder.product_supplier;
-        this.product_reorderLevel = builder.product_reorderLevel;
-        this.product_barcode = builder.product_barcode;
-        this.product_weight = builder.product_weight;
-        this.product_dimensions = builder.product_dimensions;
+        this.productId = builder.product_id;
+        this.productName = builder.product_name;
+        this.productPrice = builder.product_price;
+        this.productCategory = builder.product_category;
+        this.productDescription = builder.product_description;
+        this.productCost = builder.product_cost;
+        this.productSupplier = builder.product_supplier;
+        this.productReorderLevel = builder.product_reorderLevel;
+        this.productBarcode = builder.product_barcode;
+        this.productWeight = builder.product_weight;
+        this.productDimensions = builder.product_dimensions;
     }
 
     // 2. Static Inner Builder Class
@@ -93,19 +93,19 @@ public class Product {
     }
 
     public void print() {
-        System.out.println("Product ID: " + product_id);
-        System.out.println("Name: " + product_name);
-        System.out.println("Price: $" + product_price);
-        System.out.println("Category: " + product_category);
-        System.out.println("Cost: $" + product_cost);
-        System.out.println("Supplier: " + product_supplier);
+        System.out.println("Product ID: " + productId);
+        System.out.println("Name: " + productName);
+        System.out.println("Price: $" + productPrice);
+        System.out.println("Category: " + productCategory);
+        System.out.println("Cost: $" + productCost);
+        System.out.println("Supplier: " + productSupplier);
     }
 
     public double calculateProfit() {
-        return product_price - product_cost;
+        return productPrice - productCost;
     }
 
     public double calculateProfitMargin() {
-        return ((product_price - product_cost) / product_price) * 100;
+        return ((productPrice - productCost) / productPrice) * 100;
     }
 }

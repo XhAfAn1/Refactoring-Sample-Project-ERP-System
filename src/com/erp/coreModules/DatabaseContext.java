@@ -37,19 +37,19 @@ public class DatabaseContext {
         if (!allEmployees.isEmpty()) return; 
 
         FullTimeEmployee e1 = new FullTimeEmployee();
-        e1.employee_id = 1;
-        e1.employee_name = "John Doe";
-        e1.employee_department = "IT";
+        e1.employeeId = 1;
+        e1.employeeName = "John Doe";
+        e1.employeeDepartment = "IT";
         e1.monthlySalary = 50000;
-        e1.employee_email = "john@company.com";
+        e1.employeeEmail = "john@company.com";
         allEmployees.add(e1);
 
         FullTimeEmployee e2 = new FullTimeEmployee();
-        e2.employee_id = 2;
-        e2.employee_name = "Jane Smith";
-        e2.employee_department = "HR";
+        e2.employeeId = 2;
+        e2.employeeName = "Jane Smith";
+        e2.employeeDepartment = "HR";
         e2.monthlySalary = 45000;
-        e2.employee_email = "jane@company.com";
+        e2.employeeEmail = "jane@company.com";
         allEmployees.add(e2);
 
         Product p1 = new Product.Builder()
@@ -73,18 +73,18 @@ public class DatabaseContext {
         inventory.put(2, 200);
 
         Customer c1 = new Customer();
-        c1.customer_id = 1;
-        c1.customer_name = "ABC Corp";
-        c1.customer_email = "contact@abc.com";
-        c1.customer_phone = "123-456-7890";
-        c1.customer_creditLimit = 50000;
+        c1.customerId = 1;
+        c1.customerName = "ABC Corp";
+        c1.customerEmail = "contact@abc.com";
+        c1.customerPhone = "123-456-7890";
+        c1.customerCreditLimit = 50000;
         allCustomers.add(c1);
 
         Supplier s1 = new Supplier();
-        s1.supplier_id = 1;
-        s1.supplier_name = "Tech Supplies Inc";
-        s1.supplier_contact = "supplier@tech.com";
-        s1.supplier_phone = "987-654-3210";
+        s1.supplierId = 1;
+        s1.supplierName = "Tech Supplies Inc";
+        s1.supplierContact = "supplier@tech.com";
+        s1.supplierPhone = "987-654-3210";
         allSuppliers.add(s1);
     }
 }

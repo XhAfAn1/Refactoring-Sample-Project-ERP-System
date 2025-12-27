@@ -4,26 +4,26 @@ import com.erp.enums.TransactionType;
 import java.util.*;
 
 public class Transaction {
-    public int id;
-    public TransactionType type; 
-    public double amount;
-    public Date date;
-    public String description;
-    public String category;
-    public String reference;
+    public int transactionId;
+    public TransactionType transactionType; 
+    public double transactionAmount;
+    public Date transactionDate;
+    public String transactionDescription;
+    public String transactionCategory;
+    public String transactioneRference;
     public String paymentMethod;
     public int relatedEntityId;
 
     public Transaction() {
-        date = new Date();
+        transactionDate = new Date();
     }
 
     public void print() {
-        System.out.println("Transaction ID: " + id);
-        System.out.println("Type: " + type);
-        System.out.println("Amount: $" + amount);
-        System.out.println("Date: " + date);
-        System.out.println("Description: " + description);
-        System.out.println("Category: " + category);
+        System.out.println("Transaction ID: " + transactionId);
+        System.out.println("Type: " + transactionType);
+        System.out.println("Amount: $" + transactionAmount);
+        System.out.println("Date: " + transactionDate);
+        System.out.println("Description: " + transactionDescription);
+        System.out.println("Category: " + transactionCategory);
     }
 }

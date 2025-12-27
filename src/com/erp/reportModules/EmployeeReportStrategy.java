@@ -24,8 +24,8 @@ public class EmployeeReportStrategy implements ReportStrategy {
             FullTimeEmployee e = (FullTimeEmployee) obj;
             totalSalary += e.monthlySalary;
             deptCount.put(
-                    e.employee_department,
-                    deptCount.getOrDefault(e.employee_department, 0) + 1
+                    e.employeeDepartment,
+                    deptCount.getOrDefault(e.employeeDepartment, 0) + 1
             );
         }
 

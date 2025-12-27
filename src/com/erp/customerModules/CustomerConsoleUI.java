@@ -52,20 +52,20 @@ public class CustomerConsoleUI {
         Customer c = new Customer();
 
         System.out.print("Enter ID: ");
-        c.customer_id = scanner.nextInt();
+        c.customerId = scanner.nextInt();
         scanner.nextLine();
 
         System.out.print("Enter Name: ");
-        c.customer_name = scanner.nextLine();
+        c.customerName = scanner.nextLine();
 
         System.out.print("Enter Email: ");
-        c.customer_email = scanner.nextLine();
+        c.customerEmail = scanner.nextLine();
 
         System.out.print("Enter Phone: ");
-        c.customer_phone = scanner.nextLine();
+        c.customerPhone = scanner.nextLine();
 
         System.out.print("Enter Credit Limit: ");
-        c.customer_creditLimit = scanner.nextDouble();
+        c.customerCreditLimit = scanner.nextDouble();
         scanner.nextLine();
 
         customerService.addCustomer(c);
@@ -101,10 +101,10 @@ public class CustomerConsoleUI {
         }
 
         System.out.print("Enter new Email: ");
-        c.customer_email = scanner.nextLine();
+        c.customerEmail = scanner.nextLine();
 
         System.out.print("Enter new Phone: ");
-        c.customer_phone = scanner.nextLine();
+        c.customerPhone = scanner.nextLine();
 
         System.out.println("Updated successfully!");
     }

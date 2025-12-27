@@ -28,7 +28,7 @@ public class CustomerPortalFacade {
         }
 
         while (true) {
-            System.out.println("\n--- Hello, " + currentCustomer.customer_name + " ---");
+            System.out.println("\n--- Hello, " + currentCustomer.customerName + " ---");
             System.out.println("1. Browse Products");
             System.out.println("2. Place New Order");
             System.out.println("3. View My Order History");
@@ -61,7 +61,7 @@ public class CustomerPortalFacade {
 
         for (Object obj : ERPSystem.allCustomers) {
             Customer c = (Customer) obj;
-            if (c.customer_id == id) {
+            if (c.customerId == id) {
                 this.currentCustomer = c;
                 System.out.println("Login Successful!");
                 return true;
@@ -77,10 +77,10 @@ public class CustomerPortalFacade {
         System.out.println("\n--- AVAILABLE PRODUCTS ---");
         for (Object obj : ERPSystem.allProducts) {
             Product p = (Product) obj;
-            int stock = inventoryService.checkStock(p.product_id);
+            int stock = inventoryService.checkStock(p.productId);
             if (stock > 0) {
                 System.out.printf("ID: %d | %-15s | Price: $%-8.2f | Stock: %d%n", 
-                    p.product_id, p.product_name, p.product_price, stock);
+                    p.productId, p.productName, p.productPrice, stock);
             }
         }
     }
@@ -95,7 +95,7 @@ public class CustomerPortalFacade {
         boolean found = false;
         for (Object obj : ERPSystem.allOrders) {
             Order o = (Order) obj;
-            if (o.customerId == currentCustomer.customer_id) {
+            if (o.customerId == currentCustomer.customerId) {
                 o.print(); 
                 System.out.println("-------------------------");
                 found = true;

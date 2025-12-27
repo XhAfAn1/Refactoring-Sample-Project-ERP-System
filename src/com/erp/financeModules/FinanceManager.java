@@ -43,7 +43,7 @@ public class FinanceManager {
 
     public void addTransaction() {
         Transaction t = new Transaction();
-        t.id = transactions.size() + 1;
+        t.transactionId = transactions.size() + 1;
 
         System.out.println("Select transaction type:");
         System.out.println("1. Income");
@@ -53,27 +53,27 @@ public class FinanceManager {
         ERPSystem.scanner.nextLine();
 
         if(typeChoice == 1) {
-            t.type = TransactionType.INCOME;
+            t.transactionType = TransactionType.INCOME;
         } else {
-            t.type = TransactionType.EXPENSE;
+            t.transactionType = TransactionType.EXPENSE;
         }
 
         System.out.print("Enter amount: ");
-        t.amount = ERPSystem.scanner.nextDouble();
+        t.transactionAmount = ERPSystem.scanner.nextDouble();
         ERPSystem.scanner.nextLine();
         System.out.print("Enter description: ");
-        t.description = ERPSystem.scanner.nextLine();
+        t.transactionDescription = ERPSystem.scanner.nextLine();
         System.out.print("Enter category: ");
-        t.category = ERPSystem.scanner.nextLine();
+        t.transactionCategory = ERPSystem.scanner.nextLine();
         System.out.print("Enter payment method: ");
         t.paymentMethod = ERPSystem.scanner.nextLine();
 
         transactions.add(t);
 
-        if(t.type == TransactionType.INCOME) {
-            ERPSystem.totalRevenue += t.amount;
+        if(t.transactionType == TransactionType.INCOME) {
+            ERPSystem.totalRevenue += t.transactionAmount;
         } else {
-            ERPSystem.totalExpenses += t.amount;
+            ERPSystem.totalExpenses += t.transactionAmount;
         }
 
         System.out.println("Transaction added successfully!");
@@ -93,14 +93,14 @@ public class FinanceManager {
         HashMap<String, Double> categories = new HashMap<>();
 
         for(Transaction t : transactions) {
-            if(t.type == type) {
-                total += t.amount;
+            if(t.transactionType == type) {
+                total += t.transactionAmount;
 
-                if(categories.containsKey(t.category)) {
-                    double amt = categories.get(t.category);
-                    categories.put(t.category, amt + t.amount);
+                if(categories.containsKey(t.transactionCategory)) {
+                    double amt = categories.get(t.transactionCategory);
+                    categories.put(t.transactionCategory, amt + t.transactionAmount);
                 } else {
-                    categories.put(t.category, t.amount);
+                    categories.put(t.transactionCategory, t.transactionAmount);
                 }
             }
         }
@@ -138,10 +138,10 @@ public class FinanceManager {
         double totalExpense = 0;
 
         for(Transaction t : transactions) {
-            if(t.type == TransactionType.INCOME) {
-                totalIncome += t.amount;
+            if(t.transactionType == TransactionType.INCOME) {
+                totalIncome += t.transactionAmount;
             } else {
-                totalExpense += t.amount;
+                totalExpense += t.transactionAmount;
             }
         }
 
@@ -176,10 +176,10 @@ public class FinanceManager {
         double totalReceivable = 0;
 
         for(Customer c : (ArrayList<Customer>)ERPSystem.allCustomers) {
-            if(c.customer_currentBalance > 0) {
-                System.out.println("\nCustomer: " + c.customer_name);
-                System.out.println("Outstanding: $" + c.customer_currentBalance);
-                totalReceivable += c.customer_currentBalance;
+            if(c.customerCurrentBalance > 0) {
+                System.out.println("\nCustomer: " + c.customerName);
+                System.out.println("Outstanding: $" + c.customerCurrentBalance);
+                totalReceivable += c.customerCurrentBalance;
             }
         }
 
@@ -194,7 +194,7 @@ public class FinanceManager {
         for(Object obj : sm.purchaseOrders) {
             PurchaseOrder po = (PurchaseOrder)obj;
             if(po.paymentStatus == PaymentStatus.UNPAID) {
-                System.out.println("\nPO ID: " + po.id);
+                System.out.println("\nPO ID: " + po.purchaseOrderId);
                 System.out.println("Supplier ID: " + po.supplierId);
                 System.out.println("Amount: $" + po.totalAmount);
                 totalPayable += po.totalAmount;

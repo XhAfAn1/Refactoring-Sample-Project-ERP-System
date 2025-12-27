@@ -13,7 +13,7 @@ public class OrderUpdater {
         ERPSystem.scanner.nextLine();
 
         for (Order o : (ArrayList<Order>)ERPSystem.allOrders) {
-            if (o.id == id) {
+            if (o.orderId == id) {
 
                 System.out.println("Current status: " + o.status);
                 System.out.println("1. PENDING");
@@ -49,7 +49,7 @@ public class OrderUpdater {
         ERPSystem.scanner.nextLine();
 
         for (Order o : (ArrayList<Order>)ERPSystem.allOrders) {
-            if (o.id == id) {
+            if (o.orderId == id) {
 
                 if (o.status == OrderStatus.DELIVERED) {
                     System.out.println("Cannot cancel delivered order!");
@@ -60,7 +60,7 @@ public class OrderUpdater {
                 ERPSystem.totalRevenue -= o.totalAmount;
 
                 Customer c = findCustomer(o.customerId);
-                if (c != null) c.customer_currentBalance -= o.totalAmount;
+                if (c != null) c.customerCurrentBalance -= o.totalAmount;
 
                 System.out.println("Order cancelled!");
                 return;
@@ -75,16 +75,16 @@ public class OrderUpdater {
         ERPSystem.scanner.nextLine();
 
         for (Order o : (ArrayList<Order>)ERPSystem.allOrders) {
-            if (o.id == id) {
+            if (o.orderId == id) {
                 System.out.println("Order Total: $" + o.totalAmount);
                 System.out.print("Enter payment method: ");
                 o.paymentMethod = ERPSystem.scanner.nextLine();
 
                 Customer c = findCustomer(o.customerId);
                 if (c != null) {
-                    c.customer_currentBalance -= o.totalAmount;
+                    c.customerCurrentBalance -= o.totalAmount;
                     System.out.println("Payment processed!");
-                    System.out.println("New balance: $" + c.customer_currentBalance);
+                    System.out.println("New balance: $" + c.customerCurrentBalance);
                 }
                 return;
             }
@@ -94,7 +94,7 @@ public class OrderUpdater {
 
     private Customer findCustomer(int id) {
         for (Customer c : (ArrayList<Customer>)ERPSystem.allCustomers) {
-            if (c.customer_id == id) return c;
+            if (c.customerId == id) return c;
         }
         return null;
     }

@@ -64,13 +64,13 @@ public class SupplierManager {
 
     private Supplier createSupplierFromInput() {
         Supplier s = new Supplier();
-        s.supplier_id = readInt("Enter Supplier ID: ");
-        s.supplier_name = readLine("Enter Name: ");
-        s.supplier_contact = readLine("Enter Contact Person: ");
-        s.supplier_phone = readLine("Enter Phone: ");
-        s.supplier_email = readLine("Enter Email: ");
-        s.supplier_address = readLine("Enter Address: ");
-        s.supplier_paymentTerms = readLine("Enter Payment Terms: ");
+        s.supplierId = readInt("Enter Supplier ID: ");
+        s.supplierName = readLine("Enter Name: ");
+        s.supplierContact = readLine("Enter Contact Person: ");
+        s.supplierPhone = readLine("Enter Phone: ");
+        s.supplierEmail = readLine("Enter Email: ");
+        s.supplierAdress = readLine("Enter Address: ");
+        s.supplierPaymentTerms = readLine("Enter Payment Terms: ");
         return s;
     }
 
@@ -97,9 +97,9 @@ public class SupplierManager {
     }
 
     private void updateSupplierDetails(Supplier supplier) {
-        String newPhone = readLine("Enter new phone (current: " + supplier.supplier_phone + "): ");
-        String newEmail = readLine("Enter new email (current: " + supplier.supplier_email + "): ");
-        double newRating = readDouble("Enter new rating (current: " + supplier.supplier_rating + "): ");
+        String newPhone = readLine("Enter new phone (current: " + supplier.supplierPhone + "): ");
+        String newEmail = readLine("Enter new email (current: " + supplier.supplierEmail + "): ");
+        double newRating = readDouble("Enter new rating (current: " + supplier.supplierRating + "): ");
         
         supplier.updateContactInfo(newPhone, newEmail, newRating);
     }
@@ -117,7 +117,7 @@ public class SupplierManager {
     private boolean removeSupplierById(int id) {
         for (int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
             Supplier s = (Supplier) ERPSystem.allSuppliers.get(i);
-            if (s.supplier_id == id) {
+            if (s.supplierId == id) {
                 ERPSystem.allSuppliers.remove(i);
                 return true;
             }
@@ -155,7 +155,7 @@ public class SupplierManager {
 
     private PurchaseOrder initializePurchaseOrder(int supplierId) {
         PurchaseOrder po = new PurchaseOrder();
-        po.id = purchaseOrders.size() + 1;
+        po.purchaseOrderId = purchaseOrders.size() + 1;
         po.supplierId = supplierId;
         return po;
     }
@@ -184,7 +184,7 @@ public class SupplierManager {
     private PurchaseOrderItem createPurchaseOrderItem(int productId, Product product) {
         int quantity = readInt("Enter quantity: ");
         double cost = readDouble("Enter cost per unit: ");
-        return new PurchaseOrderItem(productId, product.product_name, quantity, cost);
+        return new PurchaseOrderItem(productId, product.productName, quantity, cost);
     }
 
     private void savePurchaseOrder(PurchaseOrder po) {
@@ -254,7 +254,7 @@ public class SupplierManager {
     private void updateSupplierPurchaseTotal(PurchaseOrder po) {
         Supplier supplier = findSupplierById(po.supplierId);
         if (supplier != null) {
-            supplier.supplier_totalPurchases += po.totalAmount;
+            supplier.supplierTotalPurchases += po.totalAmount;
         }
     }
 
@@ -267,10 +267,10 @@ public class SupplierManager {
     }
 
     private void displaySupplierPerformance(Supplier supplier) {
-        System.out.println("\nSupplier: " + supplier.supplier_name);
-        System.out.println("Rating: " + supplier.supplier_rating);
-        System.out.println("Total Purchases: $" + supplier.supplier_totalPurchases);
-        System.out.println("Total Purchase Orders: " + countPurchaseOrdersForSupplier(supplier.supplier_id));
+        System.out.println("\nSupplier: " + supplier.supplierName);
+        System.out.println("Rating: " + supplier.supplierRating);
+        System.out.println("Total Purchases: $" + supplier.supplierTotalPurchases);
+        System.out.println("Total Purchase Orders: " + countPurchaseOrdersForSupplier(supplier.supplierId));
     }
 
     private int countPurchaseOrdersForSupplier(int supplierId) {
@@ -287,7 +287,7 @@ public class SupplierManager {
     private Supplier findSupplierById(int id) {
         for (int i = 0; i < ERPSystem.allSuppliers.size(); i++) {
             Supplier s = (Supplier) ERPSystem.allSuppliers.get(i);
-            if (s.supplier_id == id) {
+            if (s.supplierId == id) {
                 return s;
             }
         }
@@ -301,7 +301,7 @@ public class SupplierManager {
     private Product findProductById(int productId) {
         for (int i = 0; i < ERPSystem.allProducts.size(); i++) {
             Product p = (Product) ERPSystem.allProducts.get(i);
-            if (p.product_id == productId) {
+            if (p.productId == productId) {
                 return p;
             }
         }
@@ -311,7 +311,7 @@ public class SupplierManager {
     private PurchaseOrder findPurchaseOrderById(int id) {
         for (int i = 0; i < purchaseOrders.size(); i++) {
             PurchaseOrder po = (PurchaseOrder) purchaseOrders.get(i);
-            if (po.id == id) {
+            if (po.purchaseOrderId == id) {
                 return po;
             }
         }

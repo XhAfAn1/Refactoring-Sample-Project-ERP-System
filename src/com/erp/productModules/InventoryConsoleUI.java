@@ -124,7 +124,7 @@ public class InventoryConsoleUI {
         for (Product p : products) {
             System.out.println("\n--- Product ---");
             p.print();
-            System.out.println("Stock: " + stock.get(p.product_id));
+            System.out.println("Stock: " + stock.get(p.productId));
             System.out.println("Profit Margin: " + p.calculateProfitMargin() + "%");
         }
     }
@@ -134,7 +134,7 @@ public class InventoryConsoleUI {
         System.out.println("\n=== LOW STOCK ===");
         if (lows.isEmpty()) System.out.println("No low stock items.");
         for (Product p : lows) {
-            System.out.println("Low stock: " + p.product_name + " (Reorder Level: " + p.product_reorderLevel + ")");
+            System.out.println("Low stock: " + p.productName + " (Reorder Level: " + p.productReorderLevel + ")");
         }
     }
 

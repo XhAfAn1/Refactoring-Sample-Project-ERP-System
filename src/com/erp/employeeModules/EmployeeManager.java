@@ -64,23 +64,23 @@ public class EmployeeManager {
 
     // 2. Collect Common Details (Shared by all Employees)
     System.out.print("Enter ID: ");
-    e.employee_id = ERPSystem.scanner.nextInt();
+    e.employeeId = ERPSystem.scanner.nextInt();
     ERPSystem.scanner.nextLine();
     
     System.out.print("Enter Name: ");
-    e.employee_name = ERPSystem.scanner.nextLine();
+    e.employeeName = ERPSystem.scanner.nextLine();
     
     System.out.print("Enter Department: ");
-    e.employee_department = ERPSystem.scanner.nextLine();
+    e.employeeDepartment = ERPSystem.scanner.nextLine();
     
     System.out.print("Enter Email: ");
-    e.employee_email = ERPSystem.scanner.nextLine();
+    e.employeeEmail = ERPSystem.scanner.nextLine();
     
     System.out.print("Enter Phone: ");
-    e.employee_phone = ERPSystem.scanner.nextLine();
+    e.employeePhone = ERPSystem.scanner.nextLine();
     
     System.out.print("Enter Position: ");
-    e.employee_position = ERPSystem.scanner.nextLine();
+    e.employeePosition = ERPSystem.scanner.nextLine();
 
     // 3. Collect Specific Details based on instance type
     if (e instanceof FullTimeEmployee) {
@@ -116,7 +116,7 @@ public class EmployeeManager {
         boolean found = false;
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            if(e.employee_id == id) {
+            if(e.employeeId == id) {
                 e.print();
                 found = true;
                 break;
@@ -135,9 +135,9 @@ public class EmployeeManager {
 
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
-            if(e.employee_id == id) {
-                System.out.print("Enter new name (current: " + e.employee_name + "): ");
-                e.employee_name = ERPSystem.scanner.nextLine();
+            if(e.employeeId == id) {
+                System.out.print("Enter new name (current: " + e.employeeName + "): ");
+                e.employeeName = ERPSystem.scanner.nextLine();
                 System.out.print("Enter new salary (current: " + e.monthlySalary + "): ");
                 e.monthlySalary = ERPSystem.scanner.nextDouble();
                 ERPSystem.scanner.nextLine();
@@ -155,7 +155,7 @@ public class EmployeeManager {
 
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            if(e.employee_id == id) {
+            if(e.employeeId == id) {
                 ERPSystem.allEmployees.remove(i);
                 System.out.println("Employee deleted!");
                 return;
@@ -173,7 +173,7 @@ public class EmployeeManager {
 
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            if(e.employee_id == id) {
+            if(e.employeeId == id) {
                 e.giveRaise(percent);
                 return;
             }
@@ -190,7 +190,7 @@ public class EmployeeManager {
 
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             FullTimeEmployee e = (FullTimeEmployee)ERPSystem.allEmployees.get(i);
-            if(e.employee_id == id) {
+            if(e.employeeId == id) {
                 e.addBonus(amount);
                 return;
             }
@@ -202,13 +202,13 @@ public class EmployeeManager {
         HashMap deptMap = new HashMap();
         for(int i = 0; i < ERPSystem.allEmployees.size(); i++) {
             Employee e = (Employee)ERPSystem.allEmployees.get(i);
-            if(deptMap.containsKey(e.employee_department)) {
-                ArrayList list = (ArrayList)deptMap.get(e.employee_department);
+            if(deptMap.containsKey(e.employeeDepartment)) {
+                ArrayList list = (ArrayList)deptMap.get(e.employeeDepartment);
                 list.add(e);
             } else {
                 ArrayList list = new ArrayList();
                 list.add(e);
-                deptMap.put(e.employee_department, list);
+                deptMap.put(e.employeeDepartment, list);
             }
         }
 

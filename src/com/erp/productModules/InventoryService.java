@@ -30,15 +30,15 @@ public class InventoryService implements OrderObserver {
 
     public void addProduct(Product p, int initialStock) {
         ERPSystem.allProducts.add(p);
-        ERPSystem.inventory.put(p.product_id, initialStock);
+        ERPSystem.inventory.put(p.productId, initialStock);
     }
 
     public boolean updateProduct(int id, double newPrice, double newCost) {
         for (Object obj : ERPSystem.allProducts) {
             Product p = (Product) obj;
-            if (p.product_id == id) {
-                p.product_price = newPrice;
-                p.product_cost = newCost;
+            if (p.productId == id) {
+                p.productPrice = newPrice;
+                p.productCost = newCost;
                 return true;
             }
         }
@@ -49,7 +49,7 @@ public class InventoryService implements OrderObserver {
         Iterator it = ERPSystem.allProducts.iterator();
         while (it.hasNext()) {
             Product p = (Product) it.next();
-            if (p.product_id == id) {
+            if (p.productId == id) {
                 it.remove();
                 ERPSystem.inventory.remove(id);
                 return true;
@@ -97,8 +97,8 @@ public class InventoryService implements OrderObserver {
         List<Product> lowStock = new ArrayList<>();
         for (Object obj : ERPSystem.allProducts) {
             Product p = (Product) obj;
-            int stock = (Integer) ERPSystem.inventory.get(p.product_id);
-            if (stock <= p.product_reorderLevel) {
+            int stock = (Integer) ERPSystem.inventory.get(p.productId);
+            if (stock <= p.productReorderLevel) {
                 lowStock.add(p);
             }
         }
@@ -109,10 +109,10 @@ public class InventoryService implements OrderObserver {
         Map<String, List<Product>> map = new HashMap<>();
         for (Object obj : ERPSystem.allProducts) {
             Product p = (Product) obj;
-            if (!map.containsKey(p.product_category)) {
-                map.put(p.product_category, new ArrayList<>());
+            if (!map.containsKey(p.productCategory)) {
+                map.put(p.productCategory, new ArrayList<>());
             }
-            map.get(p.product_category).add(p);
+            map.get(p.productCategory).add(p);
         }
         return map;
     }

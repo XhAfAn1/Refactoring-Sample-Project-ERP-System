@@ -60,8 +60,8 @@ public class SalesAnalytics implements OrderObserver {
             double total = customerOrders.get(custId);
             for (Object obj : ERPSystem.allCustomers) {
                 Customer c = (Customer) obj;
-                if (c.customer_id == custId) {
-                    System.out.println("\nCustomer: " + c.customer_name);
+                if (c.customerId == custId) {
+                    System.out.println("\nCustomer: " + c.customerName);
                     System.out.println("Total Spent: $" + total);
                 }
             }

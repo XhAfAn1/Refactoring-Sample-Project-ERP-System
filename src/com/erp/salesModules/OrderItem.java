@@ -10,10 +10,10 @@ public class OrderItem {
     public double discount;
 
     public OrderItem(Product product, int qty) {
-        this.productId = product.product_id;
-        this.productName = product.product_name;
+        this.productId = product.productId;
+        this.productName = product.productName;
         this.quantity = qty;
-        this.price = product.product_price;
+        this.price = product.productPrice;
         this.discount = 0;
     }
     public int getProductId() { return productId; }

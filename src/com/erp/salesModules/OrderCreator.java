@@ -34,7 +34,7 @@ public class OrderCreator {
         }
 
         Order order = new Order();
-        order.id = ERPSystem.allOrders.size() + 1;
+        order.orderId = ERPSystem.allOrders.size() + 1;
         order.customerId = custId;
 
         addItemsToOrder(order);
@@ -94,7 +94,7 @@ public class OrderCreator {
     private Product findProduct(int id) {
         for (Object obj : ERPSystem.allProducts) {
             Product p = (Product) obj;
-            if (p.product_id == id) return p;
+            if (p.productId == id) return p;
         }
         return null;
     }
@@ -102,7 +102,7 @@ public class OrderCreator {
     private Customer findCustomer(int id) {
         for (Object obj : ERPSystem.allCustomers) {
             Customer c = (Customer) obj;
-            if (c.customer_id == id) return c;
+            if (c.customerId == id) return c;
         }
         return null;
     }
@@ -118,7 +118,7 @@ public class OrderCreator {
     }
 
     private void finalizeOrder(Order order, Customer customer) {
-        customer.customer_currentBalance += order.totalAmount;
+        customer.customerCurrentBalance += order.totalAmount;
         ERPSystem.allOrders.add(order);
         
         // --- NOTIFY OBSERVERS ---
