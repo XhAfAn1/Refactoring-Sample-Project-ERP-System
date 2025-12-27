@@ -26,7 +26,7 @@ public class OrderUpdater {
                 int status = ERPSystem.scanner.nextInt();
                 ERPSystem.scanner.nextLine();
 
-                // Refactored: Assign Enum constants instead of Strings
+                
                 o.status = switch (status) {
                     case 1 -> OrderStatus.PENDING;
                     case 2 -> OrderStatus.CONFIRMED;

@@ -52,9 +52,9 @@ public class EmployeeManager {
     System.out.print("Enter choice: ");
     
     int type = ERPSystem.scanner.nextInt();
-    ERPSystem.scanner.nextLine(); // consume newline
+    ERPSystem.scanner.nextLine(); 
 
-    // 1. Use Factory to create the specific object
+    
     Employee e = EmployeeFactory.createEmployee(type);
     
     if (e == null) {
@@ -62,7 +62,7 @@ public class EmployeeManager {
         return;
     }
 
-    // 2. Collect Common Details (Shared by all Employees)
+
     System.out.print("Enter ID: ");
     e.employeeId = ERPSystem.scanner.nextInt();
     ERPSystem.scanner.nextLine();
@@ -82,7 +82,7 @@ public class EmployeeManager {
     System.out.print("Enter Position: ");
     e.employeePosition = ERPSystem.scanner.nextLine();
 
-    // 3. Collect Specific Details based on instance type
+   
     if (e instanceof FullTimeEmployee) {
         System.out.print("Enter Monthly Salary: ");
         ((FullTimeEmployee) e).monthlySalary = ERPSystem.scanner.nextDouble();
@@ -92,9 +92,8 @@ public class EmployeeManager {
         System.out.print("Enter Hours Per Week: ");
         ((PartTimeEmployee) e).hoursPerWeek = ERPSystem.scanner.nextInt();
     }
-    ERPSystem.scanner.nextLine(); // consume trailing newline
-
-    // 4. Add to global list
+    ERPSystem.scanner.nextLine(); 
+   
     ERPSystem.allEmployees.add(e);
     System.out.println("Employee added successfully!");
 }

@@ -21,7 +21,7 @@ public class MonthlyReportStrategy implements ReportStrategy {
         int totalStock = 0;
         for (Object obj : ERPSystem.allProducts) {
             Product p = (Product) obj;
-            totalStock += (Integer) ERPSystem.inventory.get(p.product_id);
+            totalStock += (Integer) ERPSystem.inventory.get(p.productId);
         }
         System.out.println("Total Stock: " + totalStock);
 

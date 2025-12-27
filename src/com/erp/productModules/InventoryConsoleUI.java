@@ -67,7 +67,7 @@ public class InventoryConsoleUI {
         int reorderLevel = ERPSystem.scanner.nextInt(); 
         ERPSystem.scanner.nextLine();
 
-        // --- REFACTORED: USING STATIC INNER BUILDER ---
+       
         Product p = new Product.Builder()
                 .withId(id)
                 .withName(name)

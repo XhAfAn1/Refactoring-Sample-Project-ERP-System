@@ -38,7 +38,7 @@ public class ERPSystem {
         System.out.println("Welcome to " + companyName + " ERP System");
         System.out.println("========================================");
 
-        // REFACTORED: Initialize data via the Singleton
+        
         DatabaseContext.getInstance().initializeData();
 
         while (true) {
@@ -52,7 +52,6 @@ public class ERPSystem {
             System.out.println("7. Reports & Analytics");
             System.out.println("8. System Settings");
             System.out.println("9. Exit");
-            // NEW FACADE OPTION
             System.out.println("10. Customer Portal"); 
             System.out.print("Enter choice: ");
 
@@ -71,7 +70,7 @@ public class ERPSystem {
                 System.out.println("Exiting system...");
                 break;
             } 
-            // NEW FACADE CASE
+           
             else if (choice == 10) {
                 new CustomerPortalFacade().showPortal();
             }

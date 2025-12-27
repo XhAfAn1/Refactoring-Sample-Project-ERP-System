@@ -13,7 +13,7 @@ public class Product {
     public double productWeight;
     public String productDimensions;
 
-    // 1. Private Constructor: Can only be called by the Builder
+    
     private Product(Builder builder) {
         this.productId = builder.product_id;
         this.productName = builder.product_name;
@@ -28,7 +28,7 @@ public class Product {
         this.productDimensions = builder.product_dimensions;
     }
 
-    // 2. Static Inner Builder Class
+   
     public static class Builder {
         private int product_id;
         private String product_name;
@@ -86,7 +86,7 @@ public class Product {
             return this;
         }
 
-        // 3. The Build Method
+        
         public Product build() {
             return new Product(this);
         }

@@ -8,7 +8,7 @@ import java.util.*;
 
 public class InventoryService implements OrderObserver {
 
-    // --- OBSERVER METHOD ---
+  
     @Override
     public void onOrderPlaced(Order order) {
         System.out.println("[Observer] InventoryService: Processing stock deduction...");
@@ -16,17 +16,17 @@ public class InventoryService implements OrderObserver {
         for (Object itemObj : order.items) {
             OrderItem item = (OrderItem) itemObj;
             
-            // Using the getters we added to OrderItem
+           
             int pid = item.getProductId();
             int qty = item.getQuantity();
             String pName = item.getProductName();
 
-            // Deduct stock
+         
             updateStock(pid, qty, false);
             System.out.println("   -> Deducted " + qty + " of " + pName);
         }
     }
-    // -----------------------
+
 
     public void addProduct(Product p, int initialStock) {
         ERPSystem.allProducts.add(p);

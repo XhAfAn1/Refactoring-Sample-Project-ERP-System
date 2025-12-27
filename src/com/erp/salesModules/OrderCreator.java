@@ -8,7 +8,7 @@ import java.util.List;
 
 public class OrderCreator {
 
-    // --- OBSERVER PATTERN START ---
+   
     private List<OrderObserver> observers = new ArrayList<>();
 
     public void addObserver(OrderObserver observer) {
@@ -20,7 +20,7 @@ public class OrderCreator {
             observer.onOrderPlaced(order);
         }
     }
-    // --- OBSERVER PATTERN END ---
+    
 
     public void createOrder() {
         System.out.print("Enter Customer ID: ");
@@ -74,7 +74,7 @@ public class OrderCreator {
             int qty = ERPSystem.scanner.nextInt();
             ERPSystem.scanner.nextLine();
 
-            // Check stock but DO NOT deduct yet
+
             int stock = (Integer) ERPSystem.inventory.get(prodId);
             if (stock < qty) {
                 System.out.println("Insufficient stock! Available: " + stock);
@@ -84,9 +84,6 @@ public class OrderCreator {
             OrderItem item = new OrderItem(product, qty);
             order.addItem(item);
 
-            // ERPSystem.inventory.put(prodId, stock - qty);
-            // Reason: InventoryService (Observer) will deduct it when order is finalized.
-            
             System.out.println("Item added!");
         }
     }
@@ -121,10 +118,9 @@ public class OrderCreator {
         customer.customerCurrentBalance += order.totalAmount;
         ERPSystem.allOrders.add(order);
         
-        // --- NOTIFY OBSERVERS ---
+    
         notifyObservers(order);
-        // ------------------------
-
+   
         System.out.println("Order created successfully!");
         System.out.println("Order Total: $" + order.totalAmount);
     }

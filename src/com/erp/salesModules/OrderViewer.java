@@ -21,7 +21,7 @@ public class OrderViewer {
         ERPSystem.scanner.nextLine();
 
         for (Order o : (ArrayList<Order>)ERPSystem.allOrders) {
-            if (o.id == id) {
+            if (o.orderId == id) {
                 o.printDetailed();
                 return;
             }

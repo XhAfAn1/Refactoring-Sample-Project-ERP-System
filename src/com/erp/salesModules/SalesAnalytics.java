@@ -7,14 +7,13 @@ import java.util.Map;
 
 public class SalesAnalytics implements OrderObserver {
 
-    // --- OBSERVER METHOD ---
+    
     @Override
     public void onOrderPlaced(Order order) {
         ERPSystem.totalRevenue += order.totalAmount;
         System.out.println("[Observer] SalesAnalytics: Revenue updated.");
     }
-    // -----------------------
-
+   
     public void salesStatistics() {
         System.out.println("\n=== SALES STATISTICS ===");
         System.out.println("Total Orders: " + ERPSystem.allOrders.size());

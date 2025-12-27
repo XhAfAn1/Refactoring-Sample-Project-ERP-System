@@ -71,7 +71,7 @@ public class CustomerPortalFacade {
         return false;
     }
 
-    // --- FACADE METHODS (Simplifying Subsystems) ---
+    
 
     private void browseProducts() {
         System.out.println("\n--- AVAILABLE PRODUCTS ---");
